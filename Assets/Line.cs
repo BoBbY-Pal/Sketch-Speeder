@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class Line : MonoBehaviour {
@@ -65,4 +67,17 @@ public class Line : MonoBehaviour {
 		// edgeCollider.edgeRadius = circleColliderRadius;
 	}
 
+	public IEnumerator ResetLine(float delay)
+	{
+		if (delay != 0)
+		{
+			yield return new WaitForSeconds(delay);
+		}
+		
+		points.Clear();
+		pointsCount = 0;
+		lineRenderer.positionCount = 0;
+		edgeCollider.points = Array.Empty<Vector2>();
+		gameObject.SetActive(false);
+	}
 }

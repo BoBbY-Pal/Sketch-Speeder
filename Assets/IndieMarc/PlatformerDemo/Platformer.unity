@@ -1075,7 +1075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4024761065458598, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.42
+      value: -6.08
       objectReference: {fileID: 0}
     - target: {fileID: 4024761065458598, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1274,7 +1274,7 @@ MonoBehaviour:
   down_key: 115
   jump_key: 32
   action_key: 304
-  autoMove: 1
+  autoMove: 0
 --- !u!4 &2001445338
 Transform:
   m_ObjectHideFlags: 0
@@ -1335,6 +1335,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   linePointsMinDistance: 0.2
   lineWidth: 0.1
+  poolSize: 10
   cam: {fileID: 0}
 --- !u!1 &2004517539
 GameObject:
