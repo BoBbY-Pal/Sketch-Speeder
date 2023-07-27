@@ -4,14 +4,19 @@ using Random = UnityEngine.Random;
 
 public class SpawnObstacles : MonoBehaviour
 {
-   [SerializeField] private GameObject obstacle;
+   [SerializeField] private GameObject obstaclePrefab;
 
    [SerializeField] private AxisRange xAxis;
    [SerializeField] private AxisRange yAxis;
    [SerializeField] private float timeBetweenSpawn;
    private float _spawnTime;
+   private ObjectPooler<Obstacle> _objectPooler;
+   private void Start()
+   {
+       _objectPooler = new ObjectPooler<Obstacle>(obstaclePrefab, transform);
+   }
 
-    void Update()
+   void Update()
     {
         if(Time.time > _spawnTime)
         {
@@ -24,7 +29,9 @@ public class SpawnObstacles : MonoBehaviour
     {
         float randomX = Random. Range (xAxis.min, xAxis.max);
         float randomY = Random. Range (yAxis.min, yAxis.max);
-        Instantiate(obstacle, transform.position + new Vector3(randomX, randomY, 0), obstacle.transform.rotation);
+        Obstacle obstacle = _objectPooler.GetPooledObject();
+        obstacle.transform.SetPositionAndRotation(transform.position + new Vector3(randomX, randomY, 0),
+                                                    obstacle.transform.rotation);
     }
 
     [Serializable]

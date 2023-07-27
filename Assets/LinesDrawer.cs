@@ -12,13 +12,13 @@ public class LinesDrawer : MonoBehaviour {
 	public float lineWidth;
 
 	private Line _currentLine;
-	private LinePooler _linePooler;
+	private ObjectPooler<Line> _objectPooler;
 	[SerializeField] Camera cam;
 
 
 	void Start ( ) {
 		cam = Camera.main;
-		_linePooler = new LinePooler(linePrefab, this.transform);
+		_objectPooler = new ObjectPooler<Line>(linePrefab, this.transform);
 	}
 
 	void Update ( ) {
@@ -35,7 +35,7 @@ public class LinesDrawer : MonoBehaviour {
 	// Begin Draw ----------------------------------------------
 	void BeginDraw ( ) {
 		// currentLine = Instantiate ( linePrefab, this.transform ).GetComponent <Line> ( );
-		_currentLine = _linePooler.GetPooledLine();
+		_currentLine = _objectPooler.GetPooledObject();
 		if (_currentLine == null)
 		{
 			Debug.Log("no line available in the pool.");

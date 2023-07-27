@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class DestroyObstacle : MonoBehaviour
+public class Obstacle : MonoBehaviour
 {
     [SerializeField] private float moveSpeed; 
     private void Update()
@@ -14,7 +14,7 @@ public class DestroyObstacle : MonoBehaviour
     {
         if(collision.CompareTag("Border")) 
         {    
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else if(collision.CompareTag("Player")) 
         {
