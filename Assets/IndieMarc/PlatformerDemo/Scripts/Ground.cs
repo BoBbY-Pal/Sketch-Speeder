@@ -1,28 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Ground : MonoBehaviour
 {
-    public float groundRight;
-    public float groundHeight;
+    private float groundRight; // Right edge of the ground.
+    private float groundHeight; // Height edge of the ground.
     private float screenLeft; // Left edge of the screen.
     private float screenRight; // Right edge of the screen.
-    BoxCollider2D collider;
-    Renderer rend;
+    
+    [SerializeField] BoxCollider2D collider;
+    [SerializeField] Renderer rend;
+    private Camera _camera;
 
     bool didGenerateGround = false;
-
-    public Vector2 xDistanceRange = new Vector2(-4, 10);
-    public Vector2 yHeightRange = new Vector2(-4, 10);
+    public Vector2 xDistanceRange;
+    public Vector2 yHeightRange;
 
     private void Awake()
     {
-        collider = GetComponent<BoxCollider2D>();
-        rend = GetComponent<Renderer>(); 
-        
+        _camera = Camera.main;
         groundHeight = transform.position.y + (collider.size.y / 2);
         didGenerateGround = false;
     }
@@ -34,8 +30,9 @@ public class Ground : MonoBehaviour
 
     private void Update()
     {
-        screenLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0)).x;
-        screenRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 0)).x;
+        screenLeft = _camera.ViewportToWorldPoint(new Vector3(0, 0)).x;
+        screenRight = _camera.ViewportToWorldPoint(new Vector3(1, 0)).x;
+        
         if (groundRight < screenLeft)
         {
             Destroy(gameObject);
