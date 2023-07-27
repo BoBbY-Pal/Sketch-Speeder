@@ -3,8 +3,8 @@
 public class LinesDrawer : MonoBehaviour {
 
 	public GameObject linePrefab;
-	public LayerMask cantDrawOverLayer;
-	int cantDrawOverLayerIndex;
+	
+	// int cantDrawOverLayerIndex;
 
 	[Space ( 30f )]
 	public Gradient lineColor;
@@ -18,7 +18,7 @@ public class LinesDrawer : MonoBehaviour {
 
 	void Start ( ) {
 		cam = Camera.main;
-		cantDrawOverLayerIndex = LayerMask.NameToLayer ( "CantDrawOver" );
+		// cantDrawOverLayerIndex = LayerMask.NameToLayer ( "CantDrawOver" );
 	}
 
 	void Update ( ) {
@@ -47,12 +47,12 @@ public class LinesDrawer : MonoBehaviour {
 	void Draw ( ) {
 		Vector2 mousePosition = cam.ScreenToWorldPoint ( Input.mousePosition );
 
-		//Check if mousePos hits any collider with layer "CantDrawOver", if true cut the line by calling EndDraw( )
-		RaycastHit2D hit = Physics2D.CircleCast ( mousePosition, lineWidth / 3f, Vector2.zero, 1f, cantDrawOverLayer );
+		// //Check if mousePos hits any collider with layer "CantDrawOver", if true cut the line by calling EndDraw( )
+		// RaycastHit2D hit = Physics2D.CircleCast ( mousePosition, lineWidth / 3f, Vector2.zero, 1f, cantDrawOverLayer );
 
-		if ( hit )
-			EndDraw ( );
-		else
+		// if ( hit )
+		// 	EndDraw ( );
+		// else
 			currentLine.AddPoint ( mousePosition );
 	}
 	// End Draw ------------------------------------------------
@@ -63,10 +63,11 @@ public class LinesDrawer : MonoBehaviour {
 				Destroy ( currentLine.gameObject );
 			} else {
 				//Add the line to "CantDrawOver" layer
-				currentLine.gameObject.layer = cantDrawOverLayerIndex;
+				// currentLine.gameObject.layer = cantDrawOverLayerIndex;
 
 				//Activate Physics on the line
-				currentLine.UsePhysics ( false );
+				// Set it to 'true' if you want line to fall down after drawing it.
+				currentLine.UsePhysics ( false );  
 
 				currentLine = null;
 			}

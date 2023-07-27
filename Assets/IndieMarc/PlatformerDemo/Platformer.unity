@@ -1114,7 +1114,12 @@ PrefabInstance:
     - target: {fileID: 114086076410299948, guid: 488fef3a70db04a7d975594f7ab7ce56,
         type: 3}
       propertyPath: move_max
-      value: 10
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086076410299948, guid: 488fef3a70db04a7d975594f7ab7ce56,
+        type: 3}
+      propertyPath: move_accel
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
@@ -1227,11 +1232,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 608807429}
-  target_offset: {x: 0, y: 0, z: -10}
+  target_offset: {x: 7, y: 0, z: -10}
   camera_speed: 3
+  level_top: 10
   level_bottom: -5
-  level_left: -10
-  level_right: 100
+  level_left: -5
 --- !u!1 &2001445336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1274,7 @@ MonoBehaviour:
   down_key: 115
   jump_key: 32
   action_key: 304
-  autoMove: 0
+  autoMove: 1
 --- !u!4 &2001445338
 Transform:
   m_ObjectHideFlags: 0
@@ -1299,9 +1304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 4280203194105723692, guid: 834acefd2100e5e49a66ce90bf58a8c9,
     type: 3}
-  cantDrawOverLayer:
-    serializedVersion: 2
-    m_Bits: 128
   lineColor:
     serializedVersion: 2
     key0: {r: 0.67058825, g: 0.6862745, b: 0.70980394, a: 1}

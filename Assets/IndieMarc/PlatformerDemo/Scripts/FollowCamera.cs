@@ -6,9 +6,10 @@ public class FollowCamera : MonoBehaviour
     public Vector3 target_offset;
     public float camera_speed = 5f;
 
-    [Header("Level Limits")] public float level_bottom;
+    [Header("Level Limits")] 
+    public float level_top;
+    public float level_bottom;
     public float level_left;
-    public float level_right;
 
     private PlayerCharacter target_character;
     private Camera cam;
@@ -43,8 +44,8 @@ public class FollowCamera : MonoBehaviour
             float fh = GetFrustrumHeight() / 2f;
             float fw = GetFrustrumWidth() / 2f;
             target_pos.x = Mathf.Max(level_left + fw, target_pos.x);
-            target_pos.x = Mathf.Min(level_right - fw, target_pos.x);
             target_pos.y = Mathf.Max(level_bottom + fh, target_pos.y);
+            target_pos.y = Mathf.Min(level_top - fh, target_pos.y);
 
             //Check if need to move
             Vector3 diff = target_pos - transform.position;

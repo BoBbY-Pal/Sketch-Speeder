@@ -25,9 +25,9 @@ public class Line : MonoBehaviour {
 		pointsCount++;
 
 		//Add Circle Collider to the Point
-		CircleCollider2D circleCollider = this.gameObject.AddComponent <CircleCollider2D> ( );
-		circleCollider.offset = newPoint;
-		circleCollider.radius = circleColliderRadius;
+		// CircleCollider2D circleCollider = this.gameObject.AddComponent <CircleCollider2D> ( );
+		// circleCollider.offset = newPoint;
+		// circleCollider.radius = circleColliderRadius;
 
 		//Line Renderer
 		lineRenderer.positionCount = pointsCount;
@@ -60,9 +60,9 @@ public class Line : MonoBehaviour {
 		lineRenderer.startWidth = width;
 		lineRenderer.endWidth = width;
 
-		circleColliderRadius = width / 2f;
-
-		edgeCollider.edgeRadius = circleColliderRadius;
+		// circleColliderRadius = width / 2f;
+		//
+		// edgeCollider.edgeRadius = circleColliderRadius;
 	}
 
 }
