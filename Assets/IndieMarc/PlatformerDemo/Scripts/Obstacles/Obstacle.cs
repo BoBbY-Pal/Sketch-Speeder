@@ -5,9 +5,10 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     [SerializeField] private float moveSpeed; 
+    [SerializeField] private Vector3 direction;
     private void Update()
     {
-        transform.position += Vector3.left * (moveSpeed * Time.deltaTime);
+        transform.position += direction * (moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +19,7 @@ public class Obstacle : MonoBehaviour
         }
         else if(collision.CompareTag("Player")) 
         {
-            // PlayerController.Instance.PlayerDied();
+            collision.GetComponent<PlayerCharacter>().ProcessHit();
         }
     }
 }

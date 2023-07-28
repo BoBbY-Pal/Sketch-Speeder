@@ -7,6 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class PlayerCharacter : MonoBehaviour
 {
+    [SerializeField] Spikes spikes;
     public int player_id;
 
     [Header("Stats")] public float max_hp = 100f;
@@ -99,7 +100,13 @@ public class PlayerCharacter : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(EnableSpikes(1f));
+    }
 
+    private IEnumerator EnableSpikes(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        spikes.enabled = true;
     }
 
     //Handle physics
@@ -127,7 +134,8 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (is_dead)
             return;
-
+        spikes.MoveSpikes(rigid.velocity.x <= 1);
+        
         hit_timer += Time.deltaTime;
         grounded_timer += Time.deltaTime;
 
@@ -305,6 +313,13 @@ public class PlayerCharacter : MonoBehaviour
         is_jumping = false;
     }
 
+    public void ProcessHit()
+    {
+        Debug.Log("Got Hit");
+        TakeDamage(max_hp * fall_damage_percent);
+        if (reset_when_fall)
+            Teleport(last_ground_pos);
+    }
     public void HealDamage(float heal)
     {
         if (!is_dead)

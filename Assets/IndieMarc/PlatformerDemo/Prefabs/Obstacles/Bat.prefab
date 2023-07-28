@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7260174643413445947}
   - component: {fileID: 2513879860905110545}
   m_Layer: 0
-  m_Name: Obstacle
+  m_Name: Bat
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  direction: {x: -1, y: 0, z: 0}
 --- !u!212 &7260174643413445943
 SpriteRenderer:
   m_ObjectHideFlags: 0
