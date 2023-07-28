@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7260174643413445947}
   - component: {fileID: 2513879860905110545}
   m_Layer: 0
-  m_Name: Bat
+  m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

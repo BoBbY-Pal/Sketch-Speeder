@@ -10,14 +10,15 @@ public class LinesDrawer : MonoBehaviour {
 	public Gradient lineColor;
 	public float linePointsMinDistance;
 	public float lineWidth;
-
+	private float _timeOfLineDraw;
+	public float lineDrawLimit;
+	
 	private Line _currentLine;
 	private ObjectPooler<Line> _objectPooler;
-	[SerializeField] Camera cam;
-
+	Camera _cam;
 
 	void Start ( ) {
-		cam = Camera.main;
+		_cam = Camera.main;
 		_objectPooler = new ObjectPooler<Line>(linePrefab, this.transform);
 	}
 
@@ -51,14 +52,14 @@ public class LinesDrawer : MonoBehaviour {
 	}
 	// Draw ----------------------------------------------------
 	void Draw ( ) {
-		Vector2 mousePosition = cam.ScreenToWorldPoint ( Input.mousePosition );
+		Vector2 mousePosition = _cam.ScreenToWorldPoint ( Input.mousePosition );
 
 		// //Check if mousePos hits any collider with layer "CantDrawOver", if true cut the line by calling EndDraw( )
 		// RaycastHit2D hit = Physics2D.CircleCast ( mousePosition, lineWidth / 3f, Vector2.zero, 1f, cantDrawOverLayer );
-
-		// if ( hit )
-		// 	EndDraw ( );
-		// else
+		_timeOfLineDraw += Time.deltaTime;
+		if ( _timeOfLineDraw >= lineDrawLimit )
+			EndDraw ( );
+		else
 			_currentLine.AddPoint ( mousePosition );
 	}
 	// End Draw ------------------------------------------------
@@ -78,6 +79,8 @@ public class LinesDrawer : MonoBehaviour {
 				StartCoroutine(_currentLine.ResetLine(5));
 				_currentLine = null;
 			}
+
+			_timeOfLineDraw = 0;
 		}
 	}
 }

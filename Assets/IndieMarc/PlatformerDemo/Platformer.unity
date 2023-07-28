@@ -1050,7 +1050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09445290369c8dc4fb64e8b20ef5a92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclePrefab: {fileID: 0}
+  obstaclePrefab: {fileID: 7260174643413445940, guid: c185318321ee07148b42e02215f33946,
+    type: 3}
   xAxis:
     min: 0
     max: 3
@@ -1191,7 +1192,7 @@ PrefabInstance:
     - target: {fileID: 114086076410299948, guid: 488fef3a70db04a7d975594f7ab7ce56,
         type: 3}
       propertyPath: move_accel
-      value: 5
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
@@ -1305,7 +1306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 608807429}
   target_offset: {x: 5, y: 0, z: -10}
-  camera_speed: 3
+  camera_speed: 9.5
   level_top: 10
   level_bottom: -10
   level_left: -15
@@ -1346,7 +1347,7 @@ MonoBehaviour:
   down_key: 115
   jump_key: 32
   action_key: 304
-  autoMove: 0
+  autoMove: 1
 --- !u!4 &2001445338
 Transform:
   m_ObjectHideFlags: 0
@@ -1407,7 +1408,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   linePointsMinDistance: 0.2
   lineWidth: 0.1
-  cam: {fileID: 0}
+  lineDrawLimit: 2
 --- !u!1 &2004517539
 GameObject:
   m_ObjectHideFlags: 0
