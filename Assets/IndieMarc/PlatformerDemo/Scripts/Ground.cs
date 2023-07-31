@@ -14,8 +14,8 @@ public class Ground : MonoBehaviour
     private Camera _camera;
 
     bool didGenerateGround = false;
-    public Vector2 xDistanceRange;
-    public Vector2 yHeightRange;
+    public Vector2 xDistanceRange = new Vector2(5,10);
+    public Vector2 yHeightRange = new Vector2(-1,1);
 
     private void Awake()
     {
@@ -26,8 +26,8 @@ public class Ground : MonoBehaviour
 
     private void Start()
     {
-        groundRight = rend.bounds.max.x/2;
-        tempGroundRight = (transform.position.x + collider.bounds.size.x / 2) - 2;
+        groundRight = rend.bounds.max.x;
+        tempGroundRight = (transform.position.x + collider.bounds.size.x / 2);
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class Ground : MonoBehaviour
 
     void GenerateGround()
     {
-        GameObject nextGround = Instantiate(Generator.instance.prefab[0],Generator.instance.tileGrid);
+        GameObject nextGround = Instantiate(Generator.instance.prefab[Random.Range(0, Generator.instance.prefab.Count)], Generator.instance.transform);
         Debug.Log("Ground instantiated");
         Vector2 pos;
 
