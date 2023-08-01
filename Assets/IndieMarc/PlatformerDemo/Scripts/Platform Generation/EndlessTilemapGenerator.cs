@@ -12,6 +12,9 @@ public class EndlessTilemapGenerator : MonoBehaviour
     [SerializeField] private int initialChunksCount = 1; // Number of initial chunks to load
     [SerializeField] private float gapBetweenChunks = 5f; // The distance between each tilemap chunk
     public Transform paretnTransform;
+    
+    [SerializeField] private Vector2 chunkHeightRange = new Vector2(-2, 2); // The y position range for each tilemap chunk
+    [SerializeField] private Vector2 gapRange = new Vector2(3, 5); // The range of the gap between each tilemap chunk
 
     private void Start()
     {
@@ -25,6 +28,7 @@ public class EndlessTilemapGenerator : MonoBehaviour
         {
             LoadChunk(i);
         }
+        player.gameObject.SetActive(true);
     }
 
     private void Update()
@@ -43,26 +47,31 @@ public class EndlessTilemapGenerator : MonoBehaviour
         newChunk.SetActive(true);
         float lastChunkSize = chunkSize;
         chunkSize = CalculateChunkSize(newChunk.GetComponent<Tilemap>());
-    
+
         float xPos;
+        float randomGap = Random.Range(gapRange.x, gapRange.y);
         if (activeChunks.Count == 0)
         {
-            xPos = chunkIndex * chunkSize + chunkIndex * gapBetweenChunks;
+            xPos = chunkIndex * chunkSize + chunkIndex * randomGap;
         }
         else
         {
-            xPos = activeChunks[activeChunks.Count - 1].transform.position.x + lastChunkSize + gapBetweenChunks;
+             // Random gap between chunks
+            xPos = activeChunks[activeChunks.Count - 1].transform.position.x + lastChunkSize + randomGap;
         }
 
-        newChunk.transform.position = new Vector3(xPos, 0f, 0f);
+        float yPos = Random.Range(chunkHeightRange.x, chunkHeightRange.y); // Random height for chunk
+
+        newChunk.transform.position = new Vector3(xPos, yPos, 0f);
         activeChunks.Add(newChunk);
-    
+
         // Remove the first chunk when there are too many active chunks
         if (activeChunks.Count > initialChunksCount + 1)
         {
             UnloadChunk(0);
         }
     }
+
 
 
     private void UnloadChunk(int chunkIndex)
