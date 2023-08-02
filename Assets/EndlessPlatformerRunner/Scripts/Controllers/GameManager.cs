@@ -21,6 +21,13 @@
 
         public void GameOver()
         {
+            UiManager.Instance.TogglePanel("Panel", true);
             UiManager.Instance.TogglePanel("GameOver", true);
+            ScoreManager.Instance.UpdateScoreOnGameOverScreen();
+        }
+
+        public void RestartGame()
+        {
+            
         }
     }

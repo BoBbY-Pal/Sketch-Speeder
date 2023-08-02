@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 public class SpawnObstacles : MonoBehaviour
 {
    [SerializeField] private GameObject obstaclePrefab;
-
+   [SerializeField] private Transform parentTransform;
    [SerializeField] private AxisRange xAxis;
    [SerializeField] private AxisRange yAxis;
    [SerializeField] private float timeBetweenSpawn;
@@ -13,7 +13,7 @@ public class SpawnObstacles : MonoBehaviour
    private ObjectPooler<Obstacle> _objectPooler;
    private void Start()
    {
-       _objectPooler = new ObjectPooler<Obstacle>(obstaclePrefab, transform);
+       _objectPooler = new ObjectPooler<Obstacle>(obstaclePrefab, parentTransform);
    }
 
    void Update()

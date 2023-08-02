@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -11,7 +12,8 @@ public class PlayerCharacter : MonoBehaviour
     public int player_id;
 
     [Header("Stats")] public float max_hp = 100f;
-
+    [SerializeField] private int maxLives = 3;
+    
     [Header("Status")] public bool invulnerable = false;
 
     [Header("Movement")] public float move_accel = 1f;
@@ -29,7 +31,10 @@ public class PlayerCharacter : MonoBehaviour
     public float jump_gravity = 1f;
     public float jump_fall_gravity = 1f;
     public float jump_move_percent = 0.75f;
+    
+    [Header("Ground Detection")]
     public LayerMask ground_layer;
+
     public float ground_raycast_dist = 0.1f;
 
     [Header("Crouch")] public bool can_crouch = true;
@@ -59,6 +64,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool jump_press;
     private bool jump_hold;
 
+    [SerializeField] private int currentLives; // The number of lives the player currently has.
     private float hp;
     private bool is_dead = false;
     private bool was_grounded = false;
@@ -72,9 +78,10 @@ public class PlayerCharacter : MonoBehaviour
     private float jump_timer = 0f;
     private float hit_timer = 0f;
     private float startingX; // The initial X position of the player
-    private float scoreInMeters; // Score in meters
+    private float spikes_Dist; // Initial distance between the player and spikes.
     
     private static Dictionary<int, PlayerCharacter> character_list = new Dictionary<int, PlayerCharacter>();
+    
 
     void Awake()
     {
@@ -86,6 +93,8 @@ public class PlayerCharacter : MonoBehaviour
         start_scale = transform.localScale;
         average_ground_pos = transform.position;
         last_ground_pos = transform.position;
+        spikes_Dist = Vector3.Distance(transform.position, spikes.transform.position);
+        currentLives = maxLives;
         hp = max_hp;
 
         contact_filter = new ContactFilter2D();
@@ -102,6 +111,7 @@ public class PlayerCharacter : MonoBehaviour
 
     void Start()
     {
+        
         StartCoroutine(EnableSpikes(1f));
         startingX = transform.position.x; // Capture the starting X position of the player
     }
@@ -152,13 +162,13 @@ public class PlayerCharacter : MonoBehaviour
             Jump();
         
         // Calculate the distance the player has run by subtracting the starting X position from the current X position
-        scoreInMeters = transform.position.x - startingX;
+        float scoreInMeters = transform.position.x - startingX;
         ScoreManager.Instance.UpdateScore(scoreInMeters);
         
         //Reset when fall
         if (transform.position.y < fall_pos_y - GetSize().y)
         {
-            TakeDamage(max_hp * fall_damage_percent);
+            TakeDamage();
             if (reset_when_fall)
                 Teleport(last_ground_pos);
         }
@@ -215,6 +225,7 @@ public class PlayerCharacter : MonoBehaviour
             average_ground_pos = transform.position;
         if (is_grounded)
             average_ground_pos = Vector3.Lerp(transform.position, average_ground_pos, 1f * Time.deltaTime);
+        
 
         //Save last landed position
         if (is_grounded && grounded_timer > 1f)
@@ -316,6 +327,7 @@ public class PlayerCharacter : MonoBehaviour
     public void Teleport(Vector3 pos)
     {
         transform.position = pos;
+        spikes.transform.position -= new Vector3(spikes_Dist, 0,0);
         move = Vector2.zero;
         is_jumping = false;
     }
@@ -323,10 +335,38 @@ public class PlayerCharacter : MonoBehaviour
     public void ProcessHit()
     {
         Debug.Log("Got Hit");
-        TakeDamage(max_hp * fall_damage_percent);
+        TakeDamage();
         if (reset_when_fall)
             Teleport(last_ground_pos);
     }
+    
+    // Call this function when the player takes a hit
+    public void TakeDamage()
+    {
+        if (!is_dead && !invulnerable)
+        {
+            currentLives -= 1; // Deduct one life
+            currentLives = Mathf.Clamp(currentLives, 0, maxLives); // Clamp lives between 0 and the number of heart images
+            hit_timer = -1f;
+            
+            if (currentLives <= 0)
+            {
+                Kill();
+            }
+            
+            UiManager.Instance.UpdateHearts(currentLives);
+        }
+    }
+
+    // Call this function to add lives
+    public void AddLives(int amount)
+    {
+        currentLives += amount; // Add the specified amount to lives
+        currentLives = Mathf.Clamp(currentLives, 0, maxLives); // Clamp lives between 0 and the number of heart images
+        UiManager.Instance.UpdateHearts(currentLives);
+    }
+
+    
     public void HealDamage(float heal)
     {
         if (!is_dead)
@@ -363,9 +403,11 @@ public class PlayerCharacter : MonoBehaviour
             rigid.velocity = Vector2.zero;
             move = Vector2.zero;
             move_input = Vector2.zero;
-
+            
             if (onDeath != null)
                 onDeath.Invoke();
+            
+            GameManager.Instance.GameOver();
         }
     }
 
@@ -468,4 +510,5 @@ public class PlayerCharacter : MonoBehaviour
         character_list.Values.CopyTo(list, 0);
         return list;
     }
+    
 }
