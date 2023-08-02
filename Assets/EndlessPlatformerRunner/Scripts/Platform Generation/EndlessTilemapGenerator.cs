@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class EndlessTilemapGenerator : MonoBehaviour
 {
@@ -19,7 +21,17 @@ public class EndlessTilemapGenerator : MonoBehaviour
     private void Start()
     {
         // chunkSize = tilemapChunks[0].GetComponent<Tilemap>().localBounds.size.x; // Assuming all chunks have the same size
+        
+    }
+
+    private void OnEnable()
+    {
         LoadInitialChunks();
+    }
+
+    private void OnDisable()
+    {
+        UnLoadAllChunks();
     }
 
     private void LoadInitialChunks()
@@ -79,7 +91,14 @@ public class EndlessTilemapGenerator : MonoBehaviour
         Destroy(activeChunks[chunkIndex]);
         activeChunks.RemoveAt(chunkIndex);
     }
-    
+    private void UnLoadAllChunks()
+    {
+        foreach (var chunk in activeChunks)
+        {
+            Destroy(chunk);
+        }
+        activeChunks.Clear();
+    }
     float CalculateChunkSize(Tilemap tilemap)
     {
         BoundsInt bounds = tilemap.cellBounds;

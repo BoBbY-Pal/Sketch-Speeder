@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LinesDrawer : MonoBehaviour 
 {
@@ -22,7 +23,7 @@ public class LinesDrawer : MonoBehaviour
 		_cam = Camera.main;
 		_objectPooler = new ObjectPooler<Line>(linePrefab, this.transform);
 	}
-
+	
 	void Update ( ) {
 		if ( Input.GetMouseButtonDown ( 0 ) )
 			BeginDraw ( );

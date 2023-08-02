@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    public Transform player; // Reference to the player's transform
     public TextMeshProUGUI scoreText; // Reference to the UI text component to display the score
     public Text gameOverScoreText; // Reference to the UI text component to display the score on game over screen.
     private float totalScore; // Score in meters
@@ -35,6 +34,6 @@ public class ScoreManager : Singleton<ScoreManager>
             gameOverScoreText.gameObject.SetActive(true);
         }
         // Update the score text, converting it to an integer for simplicity
-        gameOverScoreText.text = ((int)totalScore).ToString();
+        gameOverScoreText.text = ((int)totalScore).ToString() + "m";
     }
 }

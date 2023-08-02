@@ -30,8 +30,13 @@ public class UiManager : Singleton<UiManager>
     {
         mainMenuPanel.SetActive(false);
         parentPanel.SetActive(false);
-        TogglePanel("Lives Panel", true);
         GameManager.Instance.StartGame();
+    }
+
+    public void RestartGameBtnPressed()
+    {
+        TogglePanel("GameOver", false);
+        PlayBtnPressed();
     }
     
     // Update the heart images to match the current number of lives

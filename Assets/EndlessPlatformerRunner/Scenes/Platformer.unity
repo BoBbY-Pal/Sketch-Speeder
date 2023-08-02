@@ -16436,7 +16436,7 @@ GameObject:
   - component: {fileID: 6118178987879937145}
   - component: {fileID: 6118178987879937144}
   m_Layer: 5
-  m_Name: Reward 1
+  m_Name: Ranks-Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16622,7 +16622,7 @@ GameObject:
   - component: {fileID: 6118178987991364198}
   - component: {fileID: 6118178987991364218}
   m_Layer: 5
-  m_Name: Reward 2
+  m_Name: Restart-Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16692,7 +16692,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6118178987991364198}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1965033999}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: RestartGameBtnPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &6118178988259429398
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16846,7 +16858,7 @@ GameObject:
   - component: {fileID: 6118178988525503513}
   - component: {fileID: 6118178988525503512}
   m_Layer: 5
-  m_Name: Reward 3
+  m_Name: Home-Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

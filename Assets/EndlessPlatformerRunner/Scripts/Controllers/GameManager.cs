@@ -17,10 +17,13 @@
         {
             _tilemapGenerator.enabled = true;
             linesDrawer.gameObject.SetActive(true);
+            ScoreManager.Instance.UpdateScore(0);
         }
 
         public void GameOver()
         {
+            _tilemapGenerator.enabled = false;
+            linesDrawer.gameObject.SetActive(false);
             UiManager.Instance.TogglePanel("Panel", true);
             UiManager.Instance.TogglePanel("GameOver", true);
             ScoreManager.Instance.UpdateScoreOnGameOverScreen();

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -112,14 +113,25 @@ public class PlayerCharacter : MonoBehaviour
     void Start()
     {
         
-        StartCoroutine(EnableSpikes(1f));
+       
+    }
+
+    private void OnEnable()
+    {
+        is_dead = false;
+        StartCoroutine(ToggleSpikes(1f, true));
         startingX = transform.position.x; // Capture the starting X position of the player
     }
 
-    private IEnumerator EnableSpikes(float delay)
+    private void OnDisable()
+    {
+        transform.position = new Vector3(startingX, -2, 0);
+    }
+
+    private IEnumerator ToggleSpikes(float delay, bool status)
     {
         yield return new WaitForSeconds(delay);
-        spikes.enabled = true;
+        spikes.enabled = status;
     }
 
     //Handle physics
@@ -403,6 +415,9 @@ public class PlayerCharacter : MonoBehaviour
             rigid.velocity = Vector2.zero;
             move = Vector2.zero;
             move_input = Vector2.zero;
+
+            spikes.enabled = false;
+            gameObject.SetActive(false);
             
             if (onDeath != null)
                 onDeath.Invoke();
@@ -410,7 +425,7 @@ public class PlayerCharacter : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-
+    
     public void DisableControls()
     {
         disable_controls = true;

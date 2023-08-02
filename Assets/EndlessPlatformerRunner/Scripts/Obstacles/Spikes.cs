@@ -5,7 +5,28 @@ public class Spikes : MonoBehaviour
     [SerializeField] private float moveSpeed = 0.1f;
     [SerializeField] private Vector3 direction;
     public bool shouldMove = false;
-    [SerializeField] private PlayerCharacter _playerCharacter;
+    private float startingX;
+   
+    private void Awake()
+    {
+        
+    }
+    private void Start()
+    {
+        
+    }
+
+    private void OnEnable()
+    {
+        startingX = transform.position.x;
+    }
+
+    private void OnDisable()
+    {
+        shouldMove = false;
+        transform.position = new Vector3(startingX, transform.position.y,0);
+    }
+
     private void Update()
     {
         if (shouldMove)
@@ -22,7 +43,7 @@ public class Spikes : MonoBehaviour
         }
         else if(collision.CompareTag("Player")) 
         {
-            collision.GetComponent<PlayerCharacter>().ProcessHit();
+            collision.GetComponent<PlayerCharacter>().Kill();
         }
     }
 
