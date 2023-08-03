@@ -1,21 +1,42 @@
 using System;
 using Frolicode;
 using UnityEngine;
+using UnityEngine.UI;
 
- namespace Managers
+namespace Managers
 {
     public class SoundManager : Singleton<SoundManager>
     {
-        [SerializeField]
-
+        [SerializeField] private Slider musicVolumeSlider;
+        [SerializeField] private Slider soundVolumeSlider;
         public AudioSource soundMusic;
         public AudioSource soundEffect;
         public Sounds[] sound;
 
         void Awake()
         {
-            SetMusicVolume(PlayerPrefs.GetFloat("MUSICVOLUME"));
-            SetSoundVolume(PlayerPrefs.GetFloat("SOUNDVOLUME"));
+            if (PlayerPrefs.HasKey("MUSICVOLUME"))
+            {
+                float vol = PlayerPrefs.GetFloat("MUSICVOLUME");
+                musicVolumeSlider.value = vol;
+                // SetMusicVolume(PlayerPrefs.GetFloat("MUSICVOLUME"));
+            }
+            else
+            {
+                SetMusicVolume(1);
+            }
+            
+            if (PlayerPrefs.HasKey("SOUNDVOLUME"))
+            {
+                float vol = PlayerPrefs.GetFloat("SOUNDVOLUME");
+                soundVolumeSlider.value = vol;
+                // SetSoundVolume();
+            }
+            else
+            {
+                SetSoundVolume(1);
+            }
+            
         }
 
         public void Play(SoundTypes soundType)
