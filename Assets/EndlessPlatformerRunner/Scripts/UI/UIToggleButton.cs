@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 
 public class UIToggleButton : MonoBehaviour
 {
@@ -8,14 +9,14 @@ public class UIToggleButton : MonoBehaviour
     public void ToggleObject()
     {
         if (toggleObject == null) return;
-
+        SoundManager.Instance.PlayMusic(SoundTypes.ButtonClick);
         toggleObject.SetActive(!toggleObject.activeSelf);
     }
 
     public void ToggleObjects()
     {
         if (toggleObjects == null) return;
-
+        SoundManager.Instance.PlayMusic(SoundTypes.ButtonClick);
         foreach (GameObject obj in toggleObjects)
         {
             obj.SetActive(!obj.activeSelf);

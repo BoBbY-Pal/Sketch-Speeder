@@ -1,7 +1,6 @@
-using System.Diagnostics;
 using Frolicode;
+using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UiManager : Singleton<UiManager>
@@ -16,18 +15,10 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private GameObject rankingPanel;
     [SerializeField] private GameObject livesPanel;
     
-    void Start()
-    {
-        
-    }
-    
-    void Update()
-    {
-        
-    }
 
     public void PlayBtnPressed()
     {
+        SoundManager.Instance.Play(SoundTypes.ButtonClick);
         mainMenuPanel.SetActive(false);
         parentPanel.SetActive(false);
         GameManager.Instance.StartGame();
@@ -35,6 +26,7 @@ public class UiManager : Singleton<UiManager>
 
     public void RestartGameBtnPressed()
     {
+        SoundManager.Instance.Play(SoundTypes.ButtonClick);
         TogglePanel("GameOver", false);
         PlayBtnPressed();
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -118,6 +119,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private void OnEnable()
     {
+        SoundManager.Instance.PlayMusic(SoundTypes.Music);
         is_dead = false;
         StartCoroutine(ToggleSpikes(1f, true));
         startingX = transform.position.x; // Capture the starting X position of the player

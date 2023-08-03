@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Managers;
+using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
@@ -26,6 +28,11 @@ public class FollowCamera : MonoBehaviour
     {
         _instance = this;
         cam = GetComponent<Camera>();
+    }
+
+    private void Start()
+    {
+        SoundManager.Instance.PlayMusic(SoundTypes.BackgroundMusic);
     }
 
     void LateUpdate()
