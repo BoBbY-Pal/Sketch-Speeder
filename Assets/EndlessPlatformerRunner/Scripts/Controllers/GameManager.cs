@@ -1,5 +1,4 @@
 ﻿
-    using System;
     using Frolicode;
     using UnityEngine;
 
@@ -8,11 +7,6 @@
         [SerializeField] private EndlessTilemapGenerator _tilemapGenerator;
         [SerializeField] private LinesDrawer linesDrawer;
         
-        private void Start()
-        {
-
-        }
-
         public void StartGame()
         {
             _tilemapGenerator.enabled = true;

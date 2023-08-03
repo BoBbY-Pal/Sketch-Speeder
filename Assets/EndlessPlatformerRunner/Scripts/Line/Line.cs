@@ -18,6 +18,11 @@ public class Line : MonoBehaviour {
 	//Circle collider added to each line's point
 	float circleColliderRadius;
 
+	private void OnDisable()
+	{
+		ResetLine();
+	}
+
 	public void AddPoint ( Vector2 newPoint ) {
 		//If distance between last point and new point is less than pointsMinDistance do nothing (return)
 		if ( pointsCount >= 1 && Vector2.Distance ( newPoint, GetLastPoint ( ) ) < pointsMinDistance )
@@ -74,6 +79,14 @@ public class Line : MonoBehaviour {
 			yield return new WaitForSeconds(delay);
 		}
 		
+		points.Clear();
+		pointsCount = 0;
+		lineRenderer.positionCount = 0;
+		edgeCollider.points = Array.Empty<Vector2>();
+		gameObject.SetActive(false);
+	}
+	public void ResetLine()
+	{
 		points.Clear();
 		pointsCount = 0;
 		lineRenderer.positionCount = 0;

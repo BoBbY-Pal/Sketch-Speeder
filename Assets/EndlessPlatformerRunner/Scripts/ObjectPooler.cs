@@ -35,4 +35,12 @@ public class ObjectPooler<T> where T: Component
         newObj.SetActive(true);
         return newLineComponent;
     }
+
+    public void ClearPool()
+    {
+        foreach (var obj in _pool)
+        {
+            obj.gameObject.SetActive(false);
+        }
+    }
 }

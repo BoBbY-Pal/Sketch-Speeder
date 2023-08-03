@@ -1,7 +1,6 @@
 ﻿using DefaultNamespace;
 using Frolicode;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : Singleton<ScoreManager>
@@ -30,6 +29,10 @@ public class ScoreManager : Singleton<ScoreManager>
     
     public void UpdateScoreOnGameOverScreen()
     {
+        if (scoreText.gameObject.activeSelf)
+        {
+            scoreText.gameObject.SetActive(false);
+        }
         if (!gameOverScoreText.gameObject.activeSelf)
         {
             gameOverScoreText.gameObject.SetActive(true);
