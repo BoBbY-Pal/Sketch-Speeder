@@ -125,7 +125,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private void OnDisable()
     {
-        transform.position = new Vector3(startingX, -2, 0);
+        transform.position = new Vector3(startingX, 0, 0);
     }
 
     private IEnumerator ToggleSpikes(float delay, bool status)
@@ -180,9 +180,10 @@ public class PlayerCharacter : MonoBehaviour
         //Reset when fall
         if (transform.position.y < fall_pos_y - GetSize().y)
         {
-            TakeDamage();
-            if (reset_when_fall)
-                Teleport(last_ground_pos);
+            Kill();
+            // TakeDamage();
+            // if (reset_when_fall)
+            //     Teleport(last_ground_pos);
         }
     }
 
