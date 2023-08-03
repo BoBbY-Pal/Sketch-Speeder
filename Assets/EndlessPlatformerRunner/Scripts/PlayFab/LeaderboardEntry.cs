@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
-using TMPro;
 using PlayFab.ClientModels;
+using UnityEngine.UI;
 
 public class LeaderboardEntry : MonoBehaviour
 {
-    [SerializeField] TMP_Text score;
-
+    [SerializeField] Text rank;
+    [SerializeField] Text score;
+    [SerializeField] Text displayName;
+    
     public void Setup(PlayerLeaderboardEntry player)
     {
-        score?.SetText($"{player.Position+1}. {player.DisplayName}: {player.StatValue}");
+        score.text = player.StatValue.ToString();
+        rank.text = player.Position + 1.ToString();
+        displayName.text = player.DisplayName.ToString();
     }
 }

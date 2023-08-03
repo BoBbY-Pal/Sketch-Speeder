@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DefaultNamespace;
 using PlayFab;
 using UnityEngine;
 using PlayFab.ClientModels;
@@ -10,31 +11,27 @@ using UnityEngine.UI;
 public class PlayFabManager : MonoBehaviour
 {
     [SerializeField] private string _titleID;
-    private SpriteRenderer _spriteRenderer;
-
-    private Camera _camera;
 
     // public static PlayFabManager Instance;
-    public TMP_InputField loginUsernameField;
-    public TMP_InputField loginPasswordField;
+    public InputField loginUsernameField;
+    public InputField loginPasswordField;
     
-    public TMP_InputField signUpUsernameField;
-    public TMP_InputField signUpPasswordField;
-    public TMP_InputField signUpConfirmPasswordField;
+    public InputField signUpUsernameField;
+    public InputField signUpPasswordField;
+    public InputField signUpConfirmPasswordField;
+    public Text loginTitle;
+    public Text signUpTitle;
     
-    public CanvasGroup mainPanel;
-    public CanvasGroup loginPanel;
-    public CanvasGroup signUpPanel;
+    public GameObject mainPanel;
+    public GameObject loginPanel;
+    public GameObject signUpPanel;
     
-    public Canvas loginRegisterCanvas;
+    public GameObject loginRegisterCanvas;
     public bool IsLoggedIn => PlayFabClientAPI.IsClientLoggedIn();
-    public Button closeButtonLogin;
-    public Button closeButtonSignup;
-    
-    public string playerFabID;
+
+    private string playerFabID; // PlayFab ID of a local player.
     public string playerDisplayName;
-    [SerializeField] private GameObject challengeHandler;
-    [SerializeField] private GameObject MainMenu;
+    
     private List<PlayerLeaderboardEntry> players;
     public static Action<List<PlayerLeaderboardEntry>> OnPlayerListUpdated = delegate { };
     private void Awake()
@@ -48,34 +45,23 @@ public class PlayFabManager : MonoBehaviour
         // {
         //     Destroy(gameObject);
         // }
-        
-        // Make MainPanel visible, and hide the sign up, and game panels at the start
-        ShowCanvasGroup(mainPanel);
-        HideCanvasGroup(signUpPanel);
-
-        // Only hide loginPanel if user is already logged in
-        if (IsLoggedIn)
-        {
-            HideCanvasGroup(loginPanel);
-        }
-
         Debug.Log("Is Main Panel Active on Awake: " + mainPanel.gameObject.activeInHierarchy);
-
-        closeButtonLogin.onClick.AddListener(CloseLoginAndSignUpPanels);
-        closeButtonSignup.onClick.AddListener(CloseLoginAndSignUpPanels);
 
         // Check login status at start of application
         if (IsLoggedIn)
         {
             // Deactivate login/register canvas and activate main canvas
-            loginRegisterCanvas.gameObject.SetActive(false);
-            SceneManager.LoadScene("Space Invaders");
+            loginRegisterCanvas.SetActive(false);
+            UiManager.Instance.TogglePanel("Panel", true);
+            UiManager.Instance.TogglePanel("MainMenuPanel", true);
         }
         else
         {
-            //ShowCanvasGroup(loginPanel);
             // Activate login/register canvas and deactivate main canvas
-            loginRegisterCanvas.gameObject.SetActive(true);
+            loginRegisterCanvas.SetActive(true);
+            mainPanel.SetActive(true);
+            signUpPanel.SetActive(false);
+            loginPanel.SetActive(false);
         }
         players = new List<PlayerLeaderboardEntry>();
     }
@@ -99,11 +85,13 @@ public class PlayFabManager : MonoBehaviour
         // basic validation
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
         {
+            signUpTitle.text = "Username, password or confirm password is missing";
             Debug.LogError("Username, password or confirm password is missing");
             return;
         }
         if (password != confirmPassword)
         {
+            signUpTitle.text = "Password and confirm password do not match";
             Debug.LogError("Password and confirm password do not match");
             return;
         }
@@ -113,11 +101,18 @@ public class PlayFabManager : MonoBehaviour
         PlayFabClientAPI.RegisterPlayFabUser(request,
             result =>
             {
+                signUpTitle.text = "User registered successfully";
                 Debug.Log("User registered successfully");
-                HideCanvasGroup(signUpPanel);
-                ShowCanvasGroup(mainPanel); // Show the main UI of Canvas - Login/Register
+                signUpPanel.SetActive(false);
+                mainPanel.SetActive(true);
                 SetPlayerDisplayName(username);
-            }, OnFailed);
+                LeaderboardManager.Instance.SetLeaderboardScore(0);
+            }, 
+            errorCallback =>
+            {
+                OnFailed(errorCallback);
+                signUpTitle.text = errorCallback.ErrorMessage;
+            });
     }
     public void Login()
     {
@@ -128,6 +123,7 @@ public class PlayFabManager : MonoBehaviour
         // basic validation
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
+            loginTitle.text = "Username or password is missing";
             Debug.LogError("Username or password is missing");
             return;
         }
@@ -144,17 +140,21 @@ public class PlayFabManager : MonoBehaviour
         PlayFabClientAPI.LoginWithPlayFab(request, 
             result =>
         {
+            loginTitle.text = "User logged in successfully";
             Debug.Log("User logged in successfully");
-            SetOnlineStatus(1);
+           
             SetPlayerDisplayName(username);
             playerFabID = result.PlayFabId;
-            loginPanel.gameObject.SetActive(false);
-            MainMenu.SetActive(true);
+            LeaderboardManager.Instance.thisPlayerID = result.PlayFabId;
+            loginPanel.SetActive(false);
+            loginRegisterCanvas.SetActive(false);
+            UiManager.Instance.TogglePanel("Panel", true);
+            UiManager.Instance.TogglePanel("MainMenuPanel", true);
         },
             errorCallback =>
         {
             OnFailed(errorCallback);
-            
+            loginTitle.text = errorCallback.ErrorMessage;
             // Reactivate login/register canvas if login fails
             loginRegisterCanvas.gameObject.SetActive(true);
         });
@@ -169,6 +169,7 @@ public class PlayFabManager : MonoBehaviour
     private void OnFailed(PlayFabError error)
     {
         Debug.Log("There's a Error, process failed");
+        
         Debug.Log(error.GenerateErrorReport());
     }
 
@@ -278,56 +279,5 @@ public class PlayFabManager : MonoBehaviour
     private static void OnGetOnlinePlayersFailed(PlayFabError error)
     {
         Debug.Log("Failed to get online users.");
-    }
-    
-   
-    
-    private void HideCanvasGroup(CanvasGroup canvasGroup)
-    {
-        Debug.Log("HideCanvasGroup is called. Stack Trace: " + Environment.StackTrace);
-
-        canvasGroup.alpha = 0;
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
-        canvasGroup.gameObject.SetActive(false); // set game object to inactive
-    }
-    private void ShowCanvasGroup(CanvasGroup canvasGroup)
-    {
-        canvasGroup.gameObject.SetActive(true);
-
-        canvasGroup.alpha = 1;
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
-
-        Debug.Log("MainPanel: " + mainPanel);
-        Debug.Log("LoginPanel: " + loginPanel);
-        Debug.Log("SignUpPanel: " + signUpPanel);
-    }
-    
-    public void ShowLoginPanel()
-    {
-        Debug.Log("ShowLoginPanel called");
-
-        HideCanvasGroup(mainPanel);
-        ShowCanvasGroup(loginPanel);
-        HideCanvasGroup(signUpPanel);
-    }
-
-    public void ShowSignUpPanel()
-    {
-        Debug.Log("ShowSignUpPanel called");
-
-        HideCanvasGroup(mainPanel);
-        ShowCanvasGroup(signUpPanel);
-        HideCanvasGroup(loginPanel);
-    }
-    
-    public void CloseLoginAndSignUpPanels()
-    {
-        Debug.Log("CloseLoginAndSignUpPanels called");
-
-        HideCanvasGroup(loginPanel);
-        HideCanvasGroup(signUpPanel);
-        ShowCanvasGroup(mainPanel);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Frolicode;
+﻿using DefaultNamespace;
+using Frolicode;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,5 +36,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
         // Update the score text, converting it to an integer for simplicity
         gameOverScoreText.text = ((int)totalScore).ToString() + "m";
+        
+        LeaderboardManager.Instance.SetLeaderboardScore((int)totalScore);
     }
 }

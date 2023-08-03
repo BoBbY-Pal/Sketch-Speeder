@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
@@ -10,10 +9,12 @@ namespace DefaultNamespace
     public class LeaderboardManager : MonoBehaviour
     {
         public static LeaderboardManager Instance;
+        public string thisPlayerID; // PlayFab ID of a local player.
         
         [Header("UI")]
         [SerializeField] GameObject panel;
         [SerializeField] LayoutGroup layoutGroup;
+        [SerializeField] LeaderboardEntry localPlayerEntry;
         [SerializeField] LeaderboardEntry entryPrefab;
 
         List<LeaderboardEntry> _entries = new List<LeaderboardEntry>();
@@ -61,14 +62,14 @@ namespace DefaultNamespace
             Debug.Log("Leaderboard successfully updated");
         }
 
-        public IEnumerator GetLeaderboard()
+        public void GetLeaderboard()
         {
-            yield return new WaitForSeconds(.5f);
+            // yield return new WaitForSeconds(.5f);
             var request = new GetLeaderboardRequest
             {
                 StatisticName = "PlayerHighestScore",
                 StartPosition = 0,
-                MaxResultsCount = 5
+                MaxResultsCount = 10
             };
             PlayFabClientAPI.GetLeaderboard(request, OnGetLeaderboard, error =>
             {
@@ -77,13 +78,27 @@ namespace DefaultNamespace
         }
 
         private void OnGetLeaderboard(GetLeaderboardResult result)
-        {
+        { 
+            // Clear previous entries
+            foreach (LeaderboardEntry entry in _entries)
+            {
+                Destroy(entry.gameObject);
+            }
+            _entries.Clear();
+
             panel.SetActive(true);
             foreach (PlayerLeaderboardEntry player in result.Leaderboard)
             {
-                var entry = Instantiate(entryPrefab, layoutGroup.transform);
-                entry.Setup(player);
-                _entries.Add(entry);
+                if (player.PlayFabId == thisPlayerID)
+                {
+                    localPlayerEntry.Setup(player);
+                }
+                else
+                {
+                    var entry = Instantiate(entryPrefab, layoutGroup.transform);
+                    entry.Setup(player);
+                    _entries.Add(entry);
+                }
             }
         }
     }
