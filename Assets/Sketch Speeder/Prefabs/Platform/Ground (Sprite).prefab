@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 1647225246364190606}
   - component: {fileID: 1647225246364190605}
   m_Layer: 8
-  m_Name: Ground
+  m_Name: Ground (Sprite)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1647225246364190604
 Transform:
   m_ObjectHideFlags: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   groundHeight: 0
   screenLeft: 0
   screenRight: 0
+  tempGroundRight: 0
   collider: {fileID: 1647225246364190605}
   rend: {fileID: 1647225246364190607}
   xDistanceRange: {x: 10, y: 15}
