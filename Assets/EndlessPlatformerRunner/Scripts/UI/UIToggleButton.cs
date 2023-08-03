@@ -9,14 +9,14 @@ public class UIToggleButton : MonoBehaviour
     public void ToggleObject()
     {
         if (toggleObject == null) return;
-        SoundManager.Instance.PlayMusic(SoundTypes.ButtonClick);
+        SoundManager.Instance.Play(SoundTypes.ButtonClick);
         toggleObject.SetActive(!toggleObject.activeSelf);
     }
 
     public void ToggleObjects()
     {
         if (toggleObjects == null) return;
-        SoundManager.Instance.PlayMusic(SoundTypes.ButtonClick);
+        SoundManager.Instance.Play(SoundTypes.ButtonClick);
         foreach (GameObject obj in toggleObjects)
         {
             obj.SetActive(!obj.activeSelf);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class Spikes : MonoBehaviour
     {
         if(collision.CompareTag("Player")) 
         {
+            SoundManager.Instance.Play(SoundTypes.GameLose);
             collision.GetComponent<PlayerCharacter>().Kill();
         }
     }

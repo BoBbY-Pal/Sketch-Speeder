@@ -46,6 +46,11 @@ using UnityEngine;
             }
         }
 
+        public void PlayBackgroundMusic()
+        {
+            PlayMusic(SoundTypes.BackgroundMusic);
+        }
+        
         public void SetMusicVolume(float val)
         {
             soundMusic.volume = val;

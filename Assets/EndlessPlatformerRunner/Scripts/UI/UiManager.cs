@@ -19,6 +19,7 @@ public class UiManager : Singleton<UiManager>
     public void PlayBtnPressed()
     {
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
+        // AudioManager.instance.PlaySoundEffect(SoundEffect.Hit);
         mainMenuPanel.SetActive(false);
         parentPanel.SetActive(false);
         GameManager.Instance.StartGame();
@@ -27,6 +28,7 @@ public class UiManager : Singleton<UiManager>
     public void RestartGameBtnPressed()
     {
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
+        // AudioManager.instance.PlaySoundEffect(SoundEffect.Hit);
         TogglePanel("GameOver", false);
         PlayBtnPressed();
     }

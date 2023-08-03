@@ -11,7 +11,7 @@ public class LeaderboardEntry : MonoBehaviour
     public void Setup(PlayerLeaderboardEntry player)
     {
         score.text = player.StatValue.ToString() + "m";
-        rank.text = player.Position + 1.ToString();
+        rank.text = (player.Position + 1).ToString();
         displayName.text = player.DisplayName.ToString();
     }
 }
