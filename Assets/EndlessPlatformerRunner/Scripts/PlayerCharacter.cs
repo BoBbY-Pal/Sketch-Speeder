@@ -416,8 +416,8 @@ public class PlayerCharacter : MonoBehaviour
             move = Vector2.zero;
             move_input = Vector2.zero;
 
-            spikes.enabled = false;
             gameObject.SetActive(false);
+            spikes.enabled = false;
             
             if (onDeath != null)
                 onDeath.Invoke();

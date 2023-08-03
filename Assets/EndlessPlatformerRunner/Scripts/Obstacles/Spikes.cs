@@ -18,13 +18,13 @@ public class Spikes : MonoBehaviour
 
     private void OnEnable()
     {
-        startingX = transform.position.x;
+        startingX = transform.localPosition.x;
     }
 
     private void OnDisable()
     {
         shouldMove = false;
-        transform.position = new Vector3(startingX, transform.position.y,0);
+        transform.localPosition = new Vector3(startingX, transform.localPosition.y,10);
     }
 
     private void Update()
