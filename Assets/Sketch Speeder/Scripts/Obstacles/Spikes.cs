@@ -16,7 +16,7 @@ public class Spikes : MonoBehaviour
     private void OnDisable()
     {
         shouldMove = false;
-        transform.localPosition = new Vector3(startingX, transform.localPosition.y,10);
+        // transform.localPosition = new Vector3(startingX, transform.localPosition.y,10);
     }
 
     private void Update()
@@ -32,10 +32,20 @@ public class Spikes : MonoBehaviour
         if(collision.CompareTag("Player")) 
         {
             SoundManager.Instance.Play(SoundTypes.GameLose);
-            collision.GetComponent<PlayerCharacter>().Kill();
+            collision.GetComponent<PlayerCharacter>().ProcessHit();
         }
     }
-
+    
+    public void SlowDownSpikes()
+    {
+        moveSpeed = 0.5f;
+    }
+    
+    public void MoveSpikesNormally()
+    {
+        moveSpeed = 1f;
+    }
+    
     public void MoveSpikes(bool status)
     {
         shouldMove = status;

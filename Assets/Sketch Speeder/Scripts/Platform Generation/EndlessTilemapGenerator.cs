@@ -10,7 +10,7 @@ public class EndlessTilemapGenerator : MonoBehaviour
     public GameObject[] tilemapChunks;
 
     [SerializeField] private float chunkSize; // The size of each tilemap chunk
-    private List<GameObject> activeChunks = new List<GameObject>();
+    public List<GameObject> activeChunks = new List<GameObject>();
     [SerializeField] private int initialChunksCount = 1; // Number of initial chunks to load
     [SerializeField] private float gapBetweenChunks = 5f; // The distance between each tilemap chunk
     public Transform paretnTransform;
@@ -40,6 +40,8 @@ public class EndlessTilemapGenerator : MonoBehaviour
         {
             LoadChunk(i);
         }
+
+        player.localPosition = new Vector3(0, activeChunks[0].transform.position.y + 3, 0);
         player.gameObject.SetActive(true);
     }
 
@@ -84,6 +86,23 @@ public class EndlessTilemapGenerator : MonoBehaviour
         }
     }
 
+    public Vector3 FindNearestChunk(Vector3 targetPos)
+    {
+        Vector3 nearestChunkPosition = Vector3.zero;
+        float smallestDistance = float.MaxValue;
+
+        foreach (var chunk in activeChunks)
+        {
+            float distance = Mathf.Abs(chunk.transform.position.x - targetPos.x);
+            if (distance < smallestDistance)
+            {
+                smallestDistance = distance;
+                nearestChunkPosition = chunk.transform.position;
+            }
+        }
+
+        return nearestChunkPosition;
+    }
 
 
     private void UnloadChunk(int chunkIndex)

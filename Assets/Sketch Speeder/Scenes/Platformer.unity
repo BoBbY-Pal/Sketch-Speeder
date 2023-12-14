@@ -355,6 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tilemapGenerator: {fileID: 285212274}
   linesDrawer: {fileID: 1886224111}
+  player: {fileID: 608807440}
 --- !u!1001 &130778566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -584,6 +585,7 @@ MonoBehaviour:
   - {fileID: 426367684}
   - {fileID: 886792697}
   chunkSize: 13
+  activeChunks: []
   initialChunksCount: 2
   gapBetweenChunks: 5
   paretnTransform: {fileID: 1087379851}
@@ -4045,12 +4047,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1808288700, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808288700, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
+      propertyPath: powerUpPrefab
+      value: 
+      objectReference: {fileID: 7260174643413445940, guid: e8298b219dc60e344afb7d827c736db6,
+        type: 3}
+    - target: {fileID: 1808288700, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
       propertyPath: parentTransform
       value: 
       objectReference: {fileID: 112073189}
+    - target: {fileID: 1808288700, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
+      propertyPath: timeBetweenSpawn
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1262357808126890, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262357808126890, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4024761065458598, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
       propertyPath: m_RootOrder
@@ -4811,6 +4830,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3151873983163126378, guid: b44d377c2a5b64b4ca6ef032d89e4731,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6545558799114460076, guid: b44d377c2a5b64b4ca6ef032d89e4731,
         type: 3}
       propertyPath: m_RootOrder
@@ -5123,6 +5147,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239456720537819696, guid: c65ce5bd98b9d094ea22d272db9fee16,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1239456720537819697, guid: c65ce5bd98b9d094ea22d272db9fee16,
         type: 3}
@@ -10963,6 +10992,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5629037763731060420, guid: b8eb3387872eb814c9331b6eeb553205,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5629037763731060423, guid: b8eb3387872eb814c9331b6eeb553205,
         type: 3}
       propertyPath: m_RootOrder
@@ -13914,6 +13948,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7668588277740134416, guid: c2461251d41b27149984d46c9c14e7f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7668588277740134419, guid: c2461251d41b27149984d46c9c14e7f2,
         type: 3}
       propertyPath: m_RootOrder
@@ -14037,6 +14076,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948313915391667963, guid: f8fd6d91424e4c847b822cc158ead694,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8fd6d91424e4c847b822cc158ead694, type: 3}

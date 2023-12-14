@@ -1,19 +1,23 @@
 using System;
+using Sketch_Speeder.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class SpawnObstacles : MonoBehaviour
 {
    [SerializeField] private GameObject obstaclePrefab;
+   [SerializeField] private GameObject powerUpPrefab;
    [SerializeField] private Transform parentTransform;
    [SerializeField] private AxisRange xAxis;
    [SerializeField] private AxisRange yAxis;
    [SerializeField] private float timeBetweenSpawn;
    private float _spawnTime;
-   private ObjectPooler<Obstacle> _objectPooler;
+   private ObjectPooler<Obstacle> _obstacleObjectPooler;
+   private ObjectPooler<PowerUp> _powerUpsObjectPooler;
    private void Start()
    {
-       _objectPooler = new ObjectPooler<Obstacle>(obstaclePrefab, parentTransform);
+       _powerUpsObjectPooler = new ObjectPooler<PowerUp>(powerUpPrefab, parentTransform);
+       _obstacleObjectPooler = new ObjectPooler<Obstacle>(obstaclePrefab, parentTransform);
    }
 
    void Update()
@@ -29,9 +33,13 @@ public class SpawnObstacles : MonoBehaviour
     {
         float randomX = Random. Range (xAxis.min, xAxis.max);
         float randomY = Random. Range (yAxis.min, yAxis.max);
-        Obstacle obstacle = _objectPooler.GetPooledObject();
-        obstacle.transform.SetPositionAndRotation(transform.position + new Vector3(randomX, randomY, 0),
-                                                    obstacle.transform.rotation);
+        // Obstacle obstacle = _obstacleObjectPooler.GetPooledObject();
+        // obstacle.transform.SetPositionAndRotation(transform.position + new Vector3(randomX, randomY, 0),
+        //                                             obstacle.transform.rotation);
+        
+        PowerUp powerUp = _powerUpsObjectPooler.GetPooledObject();
+        powerUp.transform.SetPositionAndRotation(transform.position + new Vector3(randomX, randomY, 0),
+            powerUp.transform.rotation);
     }
 
     [Serializable]

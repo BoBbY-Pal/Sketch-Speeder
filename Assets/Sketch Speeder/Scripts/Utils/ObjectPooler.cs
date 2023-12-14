@@ -30,10 +30,10 @@ public class ObjectPooler<T> where T: Component
 
         // If we've reached here, it means all lines in the pool are in use. So, increase pool size.
         GameObject newObj = Object.Instantiate(_prefab, _parent);
-        T newLineComponent = newObj.GetComponent<T>();
-        _pool.Add(newLineComponent);
+        T newObjComponent = newObj.GetComponent<T>();
+        _pool.Add(newObjComponent);
         newObj.SetActive(true);
-        return newLineComponent;
+        return newObjComponent;
     }
 
     public void ClearPool()

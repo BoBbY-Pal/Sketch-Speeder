@@ -12,7 +12,7 @@ public class PlayerCharacter : MonoBehaviour
     public int player_id;
 
     [Header("Stats")] public float max_hp = 100f;
-    [SerializeField] private int maxLives = 3;
+    [SerializeField] public int maxLives = 3;
     
     [Header("Status")] public bool invulnerable = false;
 
@@ -44,6 +44,8 @@ public class PlayerCharacter : MonoBehaviour
     public float fall_pos_y = -5f;
     public float fall_damage_percent = 0.25f;
 
+    private static float slowDownDuration = 0f;
+    
     public UnityAction onDeath;
     public UnityAction onHit;
     public UnityAction onJump;
@@ -93,7 +95,7 @@ public class PlayerCharacter : MonoBehaviour
         start_scale = transform.localScale;
         average_ground_pos = transform.position;
         last_ground_pos = transform.position;
-        spikes_Dist = Vector3.Distance(transform.position, spikes.transform.position);
+        spikes_Dist = transform.position.x - spikes.transform.position.x;
         currentLives = maxLives;
         hp = max_hp;
 
@@ -101,7 +103,7 @@ public class PlayerCharacter : MonoBehaviour
         contact_filter.layerMask = ground_layer;
         contact_filter.useLayerMask = true;
         contact_filter.useTriggers = false;
-
+        Debug.Log("AWAKE");
     }
 
     void OnDestroy()
@@ -180,10 +182,10 @@ public class PlayerCharacter : MonoBehaviour
         //Reset when fall
         if (transform.position.y < fall_pos_y - GetSize().y)
         {
-            Kill();
-            // TakeDamage();
-            // if (reset_when_fall)
-            //     Teleport(last_ground_pos);
+            // Kill();
+            TakeDamage();
+            if (reset_when_fall)
+                Teleport(last_ground_pos);
         }
     }
 
@@ -339,15 +341,22 @@ public class PlayerCharacter : MonoBehaviour
 
     public void Teleport(Vector3 pos)
     {
-        transform.position = pos;
-        spikes.transform.position -= new Vector3(spikes_Dist, 0,0);
+        if (Vector3.Distance(transform.position, pos) > 30)
+        {
+            transform.position = GameManager.Instance._tilemapGenerator.FindNearestChunk(transform.position);
+        }
+        else
+        {
+            transform.position = pos + new Vector3(0, 5, 0);
+        }
+        spikes.transform.position -= new Vector3(spikes_Dist/2, 0,0);
         move = Vector2.zero;
         is_jumping = false;
     }
 
     public void ProcessHit()
     {
-        Debug.Log("Got Hit");
+        Debug.Log("Got Hit, processing damage");
         TakeDamage();
         if (reset_when_fall)
             Teleport(last_ground_pos);
@@ -427,6 +436,28 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
     
+    public void ExtendSlowDownEffect()
+    {
+        StopCoroutine("SlowDownGame"); // Stop any existing slowdown coroutine
+        slowDownDuration += 1f; // Add more time to the slowdown effect
+        StartCoroutine("SlowDownGame");
+    }
+
+    private IEnumerator SlowDownGame()
+    {
+        move_accel = 6; 
+        spikes.SlowDownSpikes();
+        
+        while (slowDownDuration > 0)
+        {
+            yield return new WaitForSecondsRealtime(1f);
+            slowDownDuration -= 1f;
+        }
+        
+        spikes.MoveSpikesNormally();
+        move_accel = 12;
+    }
+
     public void DisableControls()
     {
         disable_controls = true;
