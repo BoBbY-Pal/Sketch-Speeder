@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Managers;
 using UnityEngine;
@@ -388,7 +389,15 @@ public class PlayerCharacter : MonoBehaviour
         UiManager.Instance.UpdateHearts(currentLives);
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            CurrencyManager.Instance.PlayCoinCollectAnim(other.transform);
+            CurrencyManager.Instance.AddCoins(1, other.transform.position);
+        }
+    }
+
     public void HealDamage(float heal)
     {
         if (!is_dead)

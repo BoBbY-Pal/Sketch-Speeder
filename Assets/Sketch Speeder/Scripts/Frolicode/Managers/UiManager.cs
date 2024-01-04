@@ -14,7 +14,7 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject rankingPanel;
     [SerializeField] private GameObject livesPanel;
-    
+    [SerializeField] private GameObject missionsPanel;
 
     public void PlayBtnPressed()
     {
@@ -41,8 +41,18 @@ public class UiManager : Singleton<UiManager>
             hearts[i].enabled = i < currentLives; // Enable the heart if this life is active, disable it otherwise
         }
     }
+
+    public void ShowMissionsList()
+    {
+        missionsPanel.SetActive(true);
+        MissionManager.Instance.CreateMissionsList();
+    }
     
- 
+    public void HideMissionsList()
+    {
+        MissionManager.Instance.DestroyMissionsList();
+        missionsPanel.SetActive(false);
+    }
     
     public void TogglePanel(string panelToActivate, bool status)
     {

@@ -7,7 +7,7 @@ namespace Sketch_Speeder.Scripts
     {
         private static float slowDownDuration = 0f;
         private static bool isCoroutineRunning = false;
-        
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Border"))
@@ -18,7 +18,6 @@ namespace Sketch_Speeder.Scripts
             else if (collision.CompareTag("Player"))
             {
                 Debug.Log("PowerUp consumed by player");
-                // collision.GetComponent<PlayerCharacter>().ExtendSlowDownEffect();
                 ExtendSlowDownEffect();
                 DeactivatePowerUp();
             }
@@ -26,10 +25,16 @@ namespace Sketch_Speeder.Scripts
 
         private void ExtendSlowDownEffect()
         {
-            // StopCoroutine(nameof(SlowDownGame)); // Stop any existing slowdown coroutine
-            slowDownDuration += 1f; // Add more time to the slowdown effect
+            slowDownDuration += 1f;
+            Debug.Log($"Extending slow down effect, new duration: {slowDownDuration}");
+
             if (!isCoroutineRunning)
             {
+                StartCoroutine(SlowDownGame());
+            }
+            else
+            {
+                StopCoroutine(nameof(SlowDownGame));
                 StartCoroutine(SlowDownGame());
             }
         }
@@ -37,22 +42,25 @@ namespace Sketch_Speeder.Scripts
         private IEnumerator SlowDownGame()
         {
             isCoroutineRunning = true;
+            Debug.Log("Starting slow down effect");
             Time.timeScale = 0.6f;
 
             while (slowDownDuration > 0)
             {
                 yield return new WaitForSecondsRealtime(1f);
                 slowDownDuration -= 1f;
+                Debug.Log($"Slow down effect ongoing, remaining duration: {slowDownDuration}");
             }
-            
+
             Time.timeScale = 1f;
             isCoroutineRunning = false;
-
+            Debug.Log("Slow down effect ended, time scale reset to 1");
         }
 
         private void DeactivatePowerUp()
         {
-            gameObject.SetActive(false);
+            Debug.Log("Deactivating power up");
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 }

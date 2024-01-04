@@ -25,6 +25,7 @@ public class ScoreManager : Singleton<ScoreManager>
         totalScore = currentScore;
         // Update the score text, converting it to an integer for simplicity
         scoreText.text = "Score: " + ((int)currentScore).ToString() + "m";
+        MissionManager.Instance.UpdateMissions(MissionType.DistanceRun, (int)currentScore);
     }
     
     public void UpdateScoreOnGameOverScreen()
