@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SavingSystem : Frolicode.Singleton<SavingSystem>
 {
@@ -14,6 +15,7 @@ public class SavingSystem : Frolicode.Singleton<SavingSystem>
             saveData.IAPAt = 0;
             saveData.matchPlayed = 0;
             saveData.matchWin = 0;
+            saveData.powerUps = 0;
             saveData.totalCoin = 1000;
             saveData.vibrationState = true;
             saveData.globalVolume = 1;
@@ -50,6 +52,19 @@ public class SavingSystem : Frolicode.Singleton<SavingSystem>
         PlayerPrefs.DeleteKey(SaveKey);
     }
 
+    public void AddPowerUp(int quantity)
+    {
+        SaveData saveData = Load();
+        saveData.powerUps += quantity;
+        SavingSystem.Instance.Save(saveData);
+    }
+    
+    public void DeductPowerUp(int quantity)
+    {
+        SaveData saveData = Load();
+        saveData.powerUps -= quantity;
+        Save(saveData);
+    }
 }
 
 [System.Serializable]
@@ -59,6 +74,7 @@ public struct SaveData
     public int matchWin;
     public bool hasIAP;
     public int IAPAt;
+    [FormerlySerializedAs("powerUp")] public int powerUps;
     public int totalCoin;
     public float globalVolume;
     public bool vibrationState;

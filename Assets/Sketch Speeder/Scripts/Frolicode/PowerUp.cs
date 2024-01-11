@@ -23,7 +23,7 @@ namespace Sketch_Speeder.Scripts
             }
         }
 
-        private void ExtendSlowDownEffect()
+        public void ExtendSlowDownEffect()
         {
             slowDownDuration += 1f;
             Debug.Log($"Extending slow down effect, new duration: {slowDownDuration}");

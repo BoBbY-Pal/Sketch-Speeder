@@ -15,7 +15,7 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private GameObject rankingPanel;
     [SerializeField] private GameObject livesPanel;
     [SerializeField] private GameObject missionsPanel;
-
+    
     public void PlayBtnPressed()
     {
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
