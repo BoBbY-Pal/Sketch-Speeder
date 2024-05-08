@@ -1,5 +1,6 @@
 using Frolicode;
 using Managers;
+using Sketch_Speeder.Scripts.Frolicode.Advertising;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +32,7 @@ public class UiManager : Singleton<UiManager>
         // AudioManager.instance.PlaySoundEffect(SoundEffect.Hit);
         TogglePanel("GameOver", false);
         PlayBtnPressed();
+        AdManager.Instance.ShowInterstitialAd();
     }
     
     // Update the heart images to match the current number of lives

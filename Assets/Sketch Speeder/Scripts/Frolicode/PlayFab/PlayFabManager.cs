@@ -4,6 +4,7 @@ using DefaultNamespace;
 using PlayFab;
 using UnityEngine;
 using PlayFab.ClientModels;
+using Sketch_Speeder.Scripts.Frolicode.Advertising;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -36,15 +37,7 @@ public class PlayFabManager : MonoBehaviour
     public static Action<List<PlayerLeaderboardEntry>> OnPlayerListUpdated = delegate { };
     private void Awake()
     {
-        // if (Instance == null)
-        // {
-        //     Instance = this;
-        //     DontDestroyOnLoad(gameObject);
-        // }
-        // else if (Instance != this)
-        // {
-        //     Destroy(gameObject);
-        // }
+     
         Debug.Log("Is Main Panel Active on Awake: " + mainPanel.gameObject.activeInHierarchy);
 
         // Check login status at start of application
@@ -150,6 +143,7 @@ public class PlayFabManager : MonoBehaviour
             loginRegisterCanvas.SetActive(false);
             UiManager.Instance.TogglePanel("Panel", true);
             UiManager.Instance.TogglePanel("MainMenuPanel", true);
+            AdManager.Instance.ShowInterstitialAd();
         },
             errorCallback =>
         {
