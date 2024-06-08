@@ -18,8 +18,9 @@
             linesDrawer.gameObject.SetActive(true);
             ScoreManager.Instance.UpdateScore(0);
             player.AddLives(player.maxLives);
-            UiManager.Instance.TogglePanel("Lives Panel", true);
+            // UiManager.Instance.TogglePanel("Lives Panel", true);
             UiManager.Instance.UpdateHearts(player.maxLives);
+            
             
             powerUpsBtn.gameObject.SetActive(true);
             powerUpsTxt.text = SavingSystem.Instance.Load().powerUps.ToString();
@@ -28,13 +29,10 @@
 
         public void GameOver()
         {
-            _tilemapGenerator.enabled = false;
-            linesDrawer.gameObject.SetActive(false);
+            ExitGame();
             UiManager.Instance.TogglePanel("Panel", true);
             UiManager.Instance.TogglePanel("GameOver", true);
             ScoreManager.Instance.UpdateScoreOnGameOverScreen();
-            powerUpsBtn.gameObject.SetActive(false);
-            powerUpsBtn.GetComponent<Button>().onClick.RemoveListener(ActivatePowerUp);
         }
         
         public void ActivatePowerUp()
@@ -45,5 +43,14 @@
                 powerUpsBtn.ExtendSlowDownEffect();
                 powerUpsTxt.text = SavingSystem.Instance.Load().powerUps.ToString();
             }
+        }
+
+        public void ExitGame()
+        {
+            _tilemapGenerator.enabled = false;
+            linesDrawer.gameObject.SetActive(false);
+            player.gameObject.SetActive(false);
+            powerUpsBtn.gameObject.SetActive(false);
+            powerUpsBtn.GetComponent<Button>().onClick.RemoveListener(ActivatePowerUp);
         }
     }

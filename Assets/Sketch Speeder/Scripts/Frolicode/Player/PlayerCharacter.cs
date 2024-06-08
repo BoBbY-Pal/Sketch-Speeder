@@ -435,8 +435,7 @@ public class PlayerCharacter : MonoBehaviour
             rigid.velocity = Vector2.zero;
             move = Vector2.zero;
             move_input = Vector2.zero;
-
-            gameObject.SetActive(false);
+            
             spikes.enabled = false;
             
             if (onDeath != null)

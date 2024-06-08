@@ -5,8 +5,8 @@ namespace Sketch_Speeder
 {
     public class PowerUp : MonoBehaviour
     {
-        private static float slowDownDuration = 0f;
-        private static bool isCoroutineRunning = false;
+        [SerializeField]private static float slowDownDuration = 0f;
+        [SerializeField]private static bool isCoroutineRunning = false;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

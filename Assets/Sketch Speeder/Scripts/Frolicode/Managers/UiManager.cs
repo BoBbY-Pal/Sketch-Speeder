@@ -13,18 +13,23 @@ public class UiManager : Singleton<UiManager>
     
     [Space ( 30f )]
     [SerializeField] private GameObject parentPanel;
+    [SerializeField] private GameObject gameplayPanel;
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject rankingPanel;
     [SerializeField] private GameObject livesPanel;
     [SerializeField] private GameObject missionsPanel;
     [SerializeField] private PopUp _popUp;
+    [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private Button _pauseBtn;
     public void PlayBtnPressed()
     {
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
         // AudioManager.instance.PlaySoundEffect(SoundEffect.Hit);
         mainMenuPanel.SetActive(false);
         parentPanel.SetActive(false);
+        gameplayPanel.SetActive(true);
+        // _pauseBtn.gameObject.SetActive(true);
         GameManager.Instance.StartGame();
     }
 
@@ -33,6 +38,8 @@ public class UiManager : Singleton<UiManager>
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
         // AudioManager.instance.PlaySoundEffect(SoundEffect.Hit);
         TogglePanel("GameOver", false);
+        TogglePanel("Pause Screen", false);
+        // _pauseScreen.SetActive(false);
         PlayBtnPressed();
         AdManager.Instance.ShowInterstitialAd();
     }
@@ -46,6 +53,32 @@ public class UiManager : Singleton<UiManager>
         }
     }
 
+    public void ActivatePauseScreen()
+    {
+       
+        _pauseScreen.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    public void DeActivatePauseScreen()
+    {
+        _pauseScreen.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void ReturnToMainMenu()
+    {
+        // gameplayPanel.SetActive(false);
+        // _pauseScreen.SetActive(false);
+
+
+        TogglePanel("Gameplay", false);
+        TogglePanel("Pause Screen", false);
+        TogglePanel("Panel", true);
+        TogglePanel("MainMenuPanel", true);
+        Time.timeScale = 1f;
+        GameManager.Instance.ExitGame();
+    }
+    
     public void ShowMissionsList()
     {
         missionsPanel.SetActive(true);
@@ -98,6 +131,14 @@ public class UiManager : Singleton<UiManager>
         else if (livesPanel.name.Equals(panelToActivate))
         {
             livesPanel.SetActive(status);
+        }
+        else if (gameplayPanel.name.Equals(panelToActivate))
+        {
+            gameplayPanel.SetActive(status);
+        }
+        else if (_pauseScreen.name.Equals(panelToActivate))
+        {
+            _pauseScreen.SetActive(status);
         }
         
     }
