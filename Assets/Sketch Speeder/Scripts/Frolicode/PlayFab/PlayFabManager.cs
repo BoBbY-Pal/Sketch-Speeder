@@ -4,7 +4,7 @@ using DefaultNamespace;
 using PlayFab;
 using UnityEngine;
 using PlayFab.ClientModels;
-using Sketch_Speeder.Scripts.Frolicode.Advertising;
+using Sketch_Speeder.Advertising;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -118,6 +118,7 @@ public class PlayFabManager : MonoBehaviour
         {
             loginTitle.text = "Username or password is missing";
             Debug.LogError("Username or password is missing");
+            
             return;
         }
 
@@ -163,7 +164,8 @@ public class PlayFabManager : MonoBehaviour
     private void OnFailed(PlayFabError error)
     {
         Debug.Log("There's a Error, process failed");
-        
+        UiManager.Instance.ActivatePopUp("Authorization Failed", error.ErrorMessage, 0);
+
         Debug.Log(error.GenerateErrorReport());
     }
 

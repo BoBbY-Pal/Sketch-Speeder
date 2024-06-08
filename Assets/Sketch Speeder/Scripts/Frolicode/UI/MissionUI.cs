@@ -2,7 +2,7 @@
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Sketch_Speeder.Scripts.UI
+namespace Sketch_Speeder.UI
 {
     public class MissionUI : MonoBehaviour
     {

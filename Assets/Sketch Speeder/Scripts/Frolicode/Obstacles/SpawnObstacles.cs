@@ -1,5 +1,5 @@
 using System;
-using Sketch_Speeder.Scripts;
+using Sketch_Speeder;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

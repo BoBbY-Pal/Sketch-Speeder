@@ -19,7 +19,7 @@ public class Mission
         {
             isCompleted = true;
             
-            // Trigger any completion logic, like rewards
+            UiManager.Instance.ActivatePopUp("Mission Completed", description, 0.5f);
         }
         Debug.Log(this.description + " Completed: " + isCompleted + " Progress: " + progress);
     }

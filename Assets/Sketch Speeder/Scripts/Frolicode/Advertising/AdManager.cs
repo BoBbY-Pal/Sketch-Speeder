@@ -4,7 +4,7 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
 
-namespace Sketch_Speeder.Scripts.Frolicode.Advertising
+namespace Sketch_Speeder.Advertising
 {
     public class AdManager : Singleton<AdManager>
     {
@@ -76,6 +76,7 @@ namespace Sketch_Speeder.Scripts.Frolicode.Advertising
                 {
                     // TODO: Reward the user.
                     CurrencyManager.Instance.AddCoins(5,_rewardedAdsBtn.localPosition);
+                    UiManager.Instance.ActivatePopUp("REWARD CREDITED!", "5 Coins", 0);
                     Debug.LogWarning("REWARD CREDITED!");
                     Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
                 });

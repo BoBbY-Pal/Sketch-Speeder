@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Sketch_Speeder.Scripts
+namespace Sketch_Speeder
 {
     public class PowerUp : MonoBehaviour
     {

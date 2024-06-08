@@ -1,4 +1,4 @@
-using Sketch_Speeder.Scripts.Frolicode.Enums;
+using Sketch_Speeder.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 

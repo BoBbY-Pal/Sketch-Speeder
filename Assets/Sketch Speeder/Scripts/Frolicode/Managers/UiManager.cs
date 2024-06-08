@@ -1,6 +1,8 @@
+using System.Collections;
 using Frolicode;
 using Managers;
-using Sketch_Speeder.Scripts.Frolicode.Advertising;
+using Sketch_Speeder.Advertising;
+using Sketch_Speeder.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +18,7 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private GameObject rankingPanel;
     [SerializeField] private GameObject livesPanel;
     [SerializeField] private GameObject missionsPanel;
-    
+    [SerializeField] private PopUp _popUp;
     public void PlayBtnPressed()
     {
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
@@ -54,6 +56,25 @@ public class UiManager : Singleton<UiManager>
     {
         MissionManager.Instance.DestroyMissionsList();
         missionsPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Activates the small rectangular pop up.  
+    /// </summary>
+    /// <param name="title"></param> Title of the popup to be displayed at top.
+    /// <param name="description"></param> Description/Message for the popup to be displayed at middle.
+    /// <param name="timer"></param> Timer after which popup will be disabled. Pass 0 if don't want it to be disabled automatically.
+    /// <returns></returns>
+    public void ActivatePopUp(string title, string description, float timer)
+    {
+        _popUp.titleTxt.text = title;
+        _popUp.description.text = description;
+        
+        _popUp.gameObject.SetActive(true);
+        if (timer > 0)
+        {
+            StartCoroutine(_popUp.DisablePopUp(timer));
+        }
     }
     
     public void TogglePanel(string panelToActivate, bool status)

@@ -1,6 +1,6 @@
 ﻿
     using Frolicode;
-    using Sketch_Speeder.Scripts;
+    using Sketch_Speeder;
     using UnityEngine;
     using UnityEngine.UI;
 

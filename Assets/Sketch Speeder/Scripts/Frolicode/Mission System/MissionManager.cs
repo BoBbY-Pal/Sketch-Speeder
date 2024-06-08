@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Frolicode;
-using Sketch_Speeder.Scripts.UI;
+using Sketch_Speeder.UI;
 
 public class MissionManager : Singleton<MissionManager>
 {
