@@ -26,10 +26,11 @@ public class ShopItem : MonoBehaviour
         {
             CurrencyManager.Instance.DuductCoins(cost, Vector2.zero);
             SavingSystem.Instance.AddPowerUp(quantity);
+            UiManager.Instance.ActivatePopUp("Transaction Completed", $"{powerUpType.ToString()} PowerUp : {quantity} \n Cost : {cost}", 0);
         }
         else
         {
-            Debug.Log("You Don't have enough money.");
+            UiManager.Instance.ActivatePopUp("Transaction Failed", "You Don't have enough money.", 0);
         }
     }
 }
