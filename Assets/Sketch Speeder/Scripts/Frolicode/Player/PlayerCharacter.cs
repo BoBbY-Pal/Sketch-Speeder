@@ -179,6 +179,7 @@ public class PlayerCharacter : MonoBehaviour
         // Calculate the distance the player has run by subtracting the starting X position from the current X position
         float scoreInMeters = transform.position.x - startingX;
         ScoreManager.Instance.UpdateScore(scoreInMeters);
+        MissionManager.Instance.UpdateMissions(MissionType.DistanceRun, (int)scoreInMeters);
         
         //Reset when fall
         if (transform.position.y < fall_pos_y - GetSize().y)
