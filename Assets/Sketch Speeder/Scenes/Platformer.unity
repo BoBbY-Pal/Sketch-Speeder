@@ -810,7 +810,7 @@ MonoBehaviour:
   - id: 7
     type: 0
     description: Run 1000m
-    goal: 1000
+    goal: 50
     progress: 0
     isCompleted: 0
   - id: 0
@@ -8906,7 +8906,6 @@ MonoBehaviour:
   missionsPanel: {fileID: 1581559838063710902}
   _popUp: {fileID: 8530303521263849800}
   _pauseScreen: {fileID: 1118902678}
-  _pauseBtn: {fileID: 1829077939}
 --- !u!1 &1982108340
 GameObject:
   m_ObjectHideFlags: 0

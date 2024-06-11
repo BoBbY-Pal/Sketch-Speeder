@@ -18,9 +18,7 @@
             linesDrawer.gameObject.SetActive(true);
             ScoreManager.Instance.UpdateScore(0);
             player.AddLives(player.maxLives);
-            // UiManager.Instance.TogglePanel("Lives Panel", true);
             UiManager.Instance.UpdateHearts(player.maxLives);
-            
             
             powerUpsBtn.gameObject.SetActive(true);
             powerUpsTxt.text = SavingSystem.Instance.Load().powerUps.ToString();

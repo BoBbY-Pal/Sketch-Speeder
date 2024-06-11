@@ -21,7 +21,6 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private GameObject missionsPanel;
     [SerializeField] private PopUp _popUp;
     [SerializeField] private GameObject _pauseScreen;
-    [SerializeField] private Button _pauseBtn;
     public void PlayBtnPressed()
     {
         SoundManager.Instance.Play(SoundTypes.ButtonClick);
@@ -29,7 +28,6 @@ public class UiManager : Singleton<UiManager>
         mainMenuPanel.SetActive(false);
         parentPanel.SetActive(false);
         gameplayPanel.SetActive(true);
-        // _pauseBtn.gameObject.SetActive(true);
         GameManager.Instance.StartGame();
     }
 
@@ -39,7 +37,6 @@ public class UiManager : Singleton<UiManager>
         // AudioManager.instance.PlaySoundEffect(SoundEffect.Hit);
         TogglePanel("GameOver", false);
         TogglePanel("Pause Screen", false);
-        // _pauseScreen.SetActive(false);
         PlayBtnPressed();
         AdManager.Instance.ShowInterstitialAd();
     }
@@ -67,10 +64,6 @@ public class UiManager : Singleton<UiManager>
 
     public void ReturnToMainMenu()
     {
-        // gameplayPanel.SetActive(false);
-        // _pauseScreen.SetActive(false);
-
-
         TogglePanel("Gameplay", false);
         TogglePanel("Pause Screen", false);
         TogglePanel("Panel", true);

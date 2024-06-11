@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using Frolicode;
@@ -49,6 +50,12 @@ public class MissionManager : Singleton<MissionManager>
                 // mission.progress = PlayerPrefs.GetInt("MissionProgress_" + mission.id);
                 mission.isCompleted = PlayerPrefs.GetInt("MissionCompleted_" + mission.id) == 1;
             }
+
+            // Subscribe to mission events if it's not been completed.
+            if (!mission.isCompleted)
+            {
+                SubscribeToMissionEvent(mission);
+            }
         }
     }
 
@@ -76,5 +83,17 @@ public class MissionManager : Singleton<MissionManager>
         }
 
         missionsUiList.Clear();
+    }
+    
+    // Subscribe to event for a single mission
+    private void SubscribeToMissionEvent(Mission mission)
+    {
+        mission.OnMissionCompleted += HandleMissionCompleted;
+    }
+
+    // Handle the mission completed event
+    private void HandleMissionCompleted(Mission mission)
+    {
+        UiManager.Instance.ActivatePopUp("Mission Completed", mission.description, 0.5f);
     }
 }

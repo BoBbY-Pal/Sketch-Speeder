@@ -11,6 +11,9 @@ public class Mission
     public int progress = 0;
     public bool isCompleted = false;
     
+    
+    public delegate void MissionCompletedHandler(Mission mission);
+    public event MissionCompletedHandler OnMissionCompleted;
     // Method to update progress
     public void UpdateProgress(int progress)
     {
@@ -18,8 +21,7 @@ public class Mission
         if (this.progress >= goal)
         {
             isCompleted = true;
-            
-            UiManager.Instance.ActivatePopUp("Mission Completed", description, 0.5f);
+            OnMissionCompleted?.Invoke(this);
         }
         Debug.Log(this.description + " Completed: " + isCompleted + " Progress: " + progress);
     }
