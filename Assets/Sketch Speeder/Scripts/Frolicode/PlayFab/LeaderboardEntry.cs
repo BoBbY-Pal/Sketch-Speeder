@@ -1,17 +1,20 @@
-﻿using UnityEngine;
-using PlayFab.ClientModels;
+﻿using PlayFab.ClientModels;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class LeaderboardEntry : MonoBehaviour
+namespace Sketch_Speeder.PlayFab
 {
-    [SerializeField] Text rank;
-    [SerializeField] Text score;
-    [SerializeField] Text displayName;
-    
-    public void Setup(PlayerLeaderboardEntry player)
+    public class LeaderboardEntry : MonoBehaviour
     {
-        score.text = player.StatValue.ToString() + "m";
-        rank.text = (player.Position + 1).ToString();
-        displayName.text = player.DisplayName.ToString();
+        [SerializeField] Text rank;
+        [SerializeField] Text score;
+        [SerializeField] Text displayName;
+    
+        public void Setup(PlayerLeaderboardEntry player)
+        {
+            score.text = player.StatValue.ToString() + "m";
+            rank.text = (player.Position + 1).ToString();
+            displayName.text = player.DisplayName.ToString();
+        }
     }
 }

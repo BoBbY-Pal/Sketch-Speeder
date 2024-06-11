@@ -1,9 +1,9 @@
 using System;
-using Sketch_Speeder;
+using Sketch_Speeder.PowerUps;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SpawnObstacles : MonoBehaviour
+public class RandomAxisSpawner : MonoBehaviour
 {
    [SerializeField] private GameObject obstaclePrefab;
    [SerializeField] private GameObject powerUpPrefab;

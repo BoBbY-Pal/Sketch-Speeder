@@ -2,7 +2,7 @@
 using PlayFab.ClientModels;
 using UnityEngine;
 
-namespace KnoxGameStudios
+namespace Sketch_Speeder.PlayFab
 {
     public class PlayfabLogin : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿namespace Sketch_Speeder.Enums
 {
-    public enum PowerUps
+    public enum PowerUpsType
     {
         SlowDown,
     }

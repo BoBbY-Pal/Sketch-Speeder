@@ -1,6 +1,7 @@
 using Sketch_Speeder.Enums;
 using Sketch_Speeder.Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
@@ -8,7 +9,7 @@ public class ShopItem : MonoBehaviour
     [Header("Item Details")]
     public int quantity;
     public int cost;
-    public PowerUps powerUpType;
+    [FormerlySerializedAs("powerUpTypeType")] [FormerlySerializedAs("powerUpType")] public PowerUpsType powerUpsTypeType;
 
     [Header("Item Details")] 
     [SerializeField] private Text costTxt;
@@ -27,7 +28,7 @@ public class ShopItem : MonoBehaviour
         {
             CurrencyManager.Instance.DuductCoins(cost, Vector2.zero);
             SavingSystem.Instance.AddPowerUp(quantity);
-            UiManager.Instance.ActivatePopUp("Transaction Completed", $"{powerUpType.ToString()} PowerUp : {quantity} \n Cost : {cost}", 0);
+            UiManager.Instance.ActivatePopUp("Transaction Completed", $"{powerUpsTypeType.ToString()} PowerUp : {quantity} \n Cost : {cost}", 0);
         }
         else
         {
