@@ -1,99 +1,102 @@
-﻿using System;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
-using Frolicode;
+using Sketch_Speeder.Managers;
 using Sketch_Speeder.UI;
+using Sketch_Speeder.Utils;
+using UnityEngine;
 
-public class MissionManager : Singleton<MissionManager>
+namespace Sketch_Speeder.Mission_System
 {
-    public GameObject missionsParent;
-    public MissionUI missionUiPrefab;
-    public List<Mission> missions = new List<Mission>();
-    public List<MissionUI> missionsUiList = new List<MissionUI>();
-    void Start()
+    public class MissionManager : Singleton<MissionManager>
     {
-        LoadMissions();
-    }
-
-    public void AddMission(Mission mission)
-    {
-        missions.Add(mission);
-        SaveMissions();
-    }
-
-    public void UpdateMissions(MissionType type, int progress)
-    {
-        foreach (var mission in missions.Where(m => m.type == type && !m.isCompleted))
+        public GameObject missionsParent;
+        public MissionUI missionUiPrefab;
+        public List<Mission> missions = new List<Mission>();
+        public List<MissionUI> missionsUiList = new List<MissionUI>();
+        void Start()
         {
-            mission.UpdateProgress(progress);
+            LoadMissions();
         }
-        SaveMissions();
-    }
 
-    private void SaveMissions()
-    {
-        foreach (var mission in missions)
+        public void AddMission(Mission mission)
         {
-            // PlayerPrefs.SetInt("MissionProgress_" + mission.id, mission.progress);
-            PlayerPrefs.SetInt("MissionCompleted_" + mission.id, mission.isCompleted ? 1 : 0);
+            missions.Add(mission);
+            SaveMissions();
         }
-        PlayerPrefs.Save();
-    }
 
-    private void LoadMissions()
-    {
-        foreach (var mission in missions)
+        public void UpdateMissions(MissionType type, int progress)
         {
-            if (PlayerPrefs.HasKey("MissionCompleted_" + mission.id))
+            foreach (var mission in missions.Where(m => m.type == type && !m.isCompleted))
             {
-                // mission.progress = PlayerPrefs.GetInt("MissionProgress_" + mission.id);
-                mission.isCompleted = PlayerPrefs.GetInt("MissionCompleted_" + mission.id) == 1;
+                mission.UpdateProgress(progress);
             }
-
-            // Subscribe to mission events if it's not been completed.
-            if (!mission.isCompleted)
-            {
-                SubscribeToMissionEvent(mission);
-            }
+            SaveMissions();
         }
-    }
 
-    public void CreateMissionsList()
-    {
-        foreach (var mission in missions)
+        private void SaveMissions()
         {
-            MissionUI missionUI = Instantiate(missionUiPrefab, missionsParent.transform);
-            missionUI.descriptionTxt.text = mission.description;
-            missionUI.goalTxt.text = mission.goal.ToString();
-            missionUI.progressSlider.maxValue = mission.goal;
-            missionsUiList.Add(missionUI);
-            if (mission.isCompleted)
+            foreach (var mission in missions)
             {
-                missionUI.progressTxt.text = mission.goal.ToString();
-                missionUI.progressSlider.value = mission.goal;
+                // PlayerPrefs.SetInt("MissionProgress_" + mission.id, mission.progress);
+                PlayerPrefs.SetInt("MissionCompleted_" + mission.id, mission.isCompleted ? 1 : 0);
+            }
+            PlayerPrefs.Save();
+        }
+
+        private void LoadMissions()
+        {
+            foreach (var mission in missions)
+            {
+                if (PlayerPrefs.HasKey("MissionCompleted_" + mission.id))
+                {
+                    // mission.progress = PlayerPrefs.GetInt("MissionProgress_" + mission.id);
+                    mission.isCompleted = PlayerPrefs.GetInt("MissionCompleted_" + mission.id) == 1;
+                }
+
+                // Subscribe to mission events if it's not been completed.
+                if (!mission.isCompleted)
+                {
+                    SubscribeToMissionEvent(mission);
+                }
             }
         }
-    }
-    public void DestroyMissionsList()
-    {
-        foreach (var missionUI in missionsUiList)
-        {
-            Destroy(missionUI.gameObject);
-        }
 
-        missionsUiList.Clear();
-    }
+        public void CreateMissionsList()
+        {
+            foreach (var mission in missions)
+            {
+                MissionUI missionUI = Instantiate(missionUiPrefab, missionsParent.transform);
+                missionUI.descriptionTxt.text = mission.description;
+                missionUI.goalTxt.text = mission.goal.ToString();
+                missionUI.progressSlider.maxValue = mission.goal;
+                missionsUiList.Add(missionUI);
+                if (mission.isCompleted)
+                {
+                    missionUI.progressTxt.text = mission.goal.ToString();
+                    missionUI.progressSlider.value = mission.goal;
+                }
+            }
+        }
+        public void DestroyMissionsList()
+        {
+            foreach (var missionUI in missionsUiList)
+            {
+                Destroy(missionUI.gameObject);
+            }
+
+            missionsUiList.Clear();
+        }
     
-    // Subscribe to event for a single mission
-    private void SubscribeToMissionEvent(Mission mission)
-    {
-        mission.OnMissionCompleted += HandleMissionCompleted;
-    }
+        // Subscribe to event for a single mission
+        private void SubscribeToMissionEvent(Mission mission)
+        {
+            mission.OnMissionCompleted += HandleMissionCompleted;
+        }
 
-    // Handle the mission completed event
-    private void HandleMissionCompleted(Mission mission)
-    {
-        UiManager.Instance.ActivatePopUp("Mission Completed", mission.description, 0.5f);
+        // Handle the mission completed event
+        private void HandleMissionCompleted(Mission mission)
+        {
+            UiManager.Instance.ActivatePopUp("Mission Completed", mission.description, 0.5f);
+        }
     }
 }

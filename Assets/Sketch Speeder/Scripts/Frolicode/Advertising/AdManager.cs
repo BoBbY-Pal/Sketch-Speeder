@@ -1,8 +1,9 @@
 ﻿using System;
-using Frolicode;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
+using Sketch_Speeder.Managers;
+using Sketch_Speeder.Utils;
 
 namespace Sketch_Speeder.Advertising
 {

@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using DefaultNamespace;
 using PlayFab;
 using UnityEngine;
 using PlayFab.ClientModels;
 using Sketch_Speeder.Advertising;
+using Sketch_Speeder.Managers;
+using Sketch_Speeder.PlayFab;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

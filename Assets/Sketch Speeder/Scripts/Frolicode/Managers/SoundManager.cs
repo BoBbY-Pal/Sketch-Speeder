@@ -1,9 +1,9 @@
 using System;
-using Frolicode;
+using Sketch_Speeder.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Managers
+namespace Sketch_Speeder.Managers
 {
     public class SoundManager : Singleton<SoundManager>
     {

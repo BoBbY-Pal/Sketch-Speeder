@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Sketch_Speeder.Utils;
+using UnityEngine;
 using UnityEngine.Serialization;
 
-public class SavingSystem : Frolicode.Singleton<SavingSystem>
+public class SavingSystem : Singleton<SavingSystem>
 {
     private const string SaveKey = "SaveData";
 

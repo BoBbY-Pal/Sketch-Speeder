@@ -17,12 +17,7 @@ public class EndlessTilemapGenerator : MonoBehaviour
     
     [SerializeField] private Vector2 chunkHeightRange = new Vector2(-2, 2); // The y position range for each tilemap chunk
     [SerializeField] private Vector2 gapRange = new Vector2(3, 5); // The range of the gap between each tilemap chunk
-
-    private void Start()
-    {
-        // chunkSize = tilemapChunks[0].GetComponent<Tilemap>().localBounds.size.x; // Assuming all chunks have the same size
-        
-    }
+    
 
     private void OnEnable()
     {

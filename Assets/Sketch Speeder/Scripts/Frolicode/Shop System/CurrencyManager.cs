@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using DG.Tweening;
+using Sketch_Speeder.Utils;
 using TMPro;
 
-public class CurrencyManager : Frolicode.Singleton<CurrencyManager>
+public class CurrencyManager : Singleton<CurrencyManager>
 {
     public event Action<int, int, Vector2> OnCurrencyIncrease;
     public event Action<int, int, Vector2> OncurrencyDecrease;

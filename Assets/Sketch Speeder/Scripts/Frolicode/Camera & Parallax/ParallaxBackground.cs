@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Script for parallax background
 /// </summary>
 
-namespace IndieMarc.Platformer
+namespace Sketch_Speeder.Camera___Parallax
 {
     public class ParallaxBackground : MonoBehaviour
     {

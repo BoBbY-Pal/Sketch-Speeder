@@ -4,7 +4,7 @@ using PlayFab.ClientModels;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefaultNamespace
+namespace Sketch_Speeder.PlayFab
 {
     public class LeaderboardManager : MonoBehaviour
     {

@@ -1,9 +1,9 @@
-﻿
-    using Frolicode;
-    using Sketch_Speeder;
-    using UnityEngine;
-    using UnityEngine.UI;
+﻿using Sketch_Speeder.Utils;
+using UnityEngine;
+using UnityEngine.UI;
 
+namespace Sketch_Speeder.Managers
+{
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField] public EndlessTilemapGenerator _tilemapGenerator;
@@ -11,6 +11,7 @@
         [SerializeField] private PlayerCharacter player;
         [SerializeField] private PowerUp powerUpsBtn;
         [SerializeField] private Text powerUpsTxt;
+
         public void StartGame()
         {
             Time.timeScale = 1f;
@@ -19,7 +20,7 @@
             ScoreManager.Instance.UpdateScore(0);
             player.AddLives(player.maxLives);
             UiManager.Instance.UpdateHearts(player.maxLives);
-            
+
             powerUpsBtn.gameObject.SetActive(true);
             powerUpsTxt.text = SavingSystem.Instance.Load().powerUps.ToString();
             powerUpsBtn.GetComponent<Button>().onClick.AddListener(ActivatePowerUp);
@@ -32,7 +33,7 @@
             UiManager.Instance.TogglePanel("GameOver", true);
             ScoreManager.Instance.UpdateScoreOnGameOverScreen();
         }
-        
+
         public void ActivatePowerUp()
         {
             if (SavingSystem.Instance.Load().powerUps > 0)
@@ -52,3 +53,4 @@
             powerUpsBtn.GetComponent<Button>().onClick.RemoveListener(ActivatePowerUp);
         }
     }
+}
