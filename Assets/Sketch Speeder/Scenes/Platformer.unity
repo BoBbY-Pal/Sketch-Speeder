@@ -8414,7 +8414,13 @@ PrefabInstance:
       propertyPath: spikes
       value: 
       objectReference: {fileID: 1073319572}
-    m_RemovedComponents: []
+    - target: {fileID: 114541676939290310, guid: 488fef3a70db04a7d975594f7ab7ce56,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114742282308265290, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 488fef3a70db04a7d975594f7ab7ce56, type: 3}
 --- !u!1 &1886224109
 GameObject:

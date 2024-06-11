@@ -1,4 +1,5 @@
 ﻿using Sketch_Speeder.Managers;
+using Sketch_Speeder.Player;
 using UnityEngine;
 
 public class Spikes : MonoBehaviour

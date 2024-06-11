@@ -1,4 +1,5 @@
-﻿using Sketch_Speeder.Utils;
+﻿using Sketch_Speeder.Player;
+using Sketch_Speeder.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
