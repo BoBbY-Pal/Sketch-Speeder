@@ -13,7 +13,7 @@ namespace Sketch_Speeder.Advertising
    
     private readonly string interstitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";   // test id
     private readonly string rewardAdUnitId = "ca-app-pub-3940256099942544/5224354917";  // test id
-    priate readonly string appOpenAdUnitId =  "ca-app-pub-3940256099942544/3419835294" // test id
+    private readonly string appOpenAdUnitId =  "ca-app-pub-3940256099942544/3419835294"; // test id
     private readonly string bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111"    ;
 #else
         private readonly string interstitialAdUnitId = "unused";
