@@ -3471,7 +3471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quantity: 1
-  cost: 1
+  cost: 300
   powerUpsTypeType: 0
   costTxt: {fileID: 1996030175}
   quantityTxt: {fileID: 1370363483}
@@ -16544,6 +16544,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Your Rank
+      objectReference: {fileID: 0}
+    - target: {fileID: 6809071462609387209, guid: 218c4ceac11abf840a1f64bfeb9725eb,
+        type: 3}
+      propertyPath: m_Text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6809071463133510011, guid: 218c4ceac11abf840a1f64bfeb9725eb,
+        type: 3}
+      propertyPath: m_Text
+      value: 0 pts
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 218c4ceac11abf840a1f64bfeb9725eb, type: 3}
